@@ -2,16 +2,18 @@
 <html lang="si">
 <head>
   <meta charset="UTF-8">
-  <title>A/L Biology 1700+ MCQ Master</title>
+  <title>BIOLESI.LK | A/L Biology 1,700+ MCQ Master</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #059669;
       --primary-light: #10b981;
       --primary-dark: #065f46;
-      --bg: #f8fafc;
-      --card: #ffffff;
+      --brand-yellow: #fde047;
+      --brand-border: #000000;
+      --bg: #0f172a;
+      --app-bg: #ffffff;
       --text: #0f172a;
       --muted: #64748b;
       --correct: #16a34a;
@@ -23,7 +25,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Noto Sans Sinhala', 'Inter', sans-serif;
-      background: var(--bg);
+      background: #0f172a;
       color: var(--text);
       display: flex;
       justify-content: center;
@@ -34,33 +36,111 @@
       width: 100%;
       max-width: 640px;
       min-height: 100vh;
-      background: var(--card);
+      background: var(--app-bg);
       display: flex;
       flex-direction: column;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      position: relative;
     }
+
+    /* Top Navigation Bar */
     header {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      background: linear-gradient(135deg, #064e3b, #059669);
       color: #fff;
-      padding: 16px 20px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 50;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
-    header h1 { font-size: 1.05rem; font-weight: 700; }
-    .header-badge {
-      font-size: 0.75rem;
-      background: rgba(255,255,255,0.22);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 600;
+    .nav-btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
+    .nav-btn:hover { background: rgba(255,255,255,0.3); }
+
     .page-view { display: none; padding: 20px; flex: 1; }
-    .active-view { display: block; }
+    .active-view { display: flex; flex-direction: column; }
+
+    /* PAGE 1: BIOLESI.LK BRAND LANDING PAGE */
+    #view-home {
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      color: white;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 24px;
+      min-height: 100vh;
+    }
+    .brand-logo-container {
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .biolesi-logo {
+      font-family: 'Fredoka One', cursive, sans-serif;
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+      color: var(--brand-yellow);
+      -webkit-text-stroke: 3px var(--brand-border);
+      text-shadow: 
+        4px 4px 0px #000,
+        -2px -2px 0px #000,
+        2px -2px 0px #000,
+        -2px 2px 0px #000,
+        0px 6px 15px rgba(0,0,0,0.6);
+      display: inline-block;
+      transform: rotate(-1.5deg);
+    }
+    .brand-subtitle {
+      font-size: 1.15rem;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .badge-highlight {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--primary-light);
+      color: #6ee7b7;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 40px;
+    }
+    .home-start-btn {
+      background: linear-gradient(135deg, #fde047, #facc15);
+      color: #000000;
+      border: 3px solid #000000;
+      padding: 16px 36px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0px #000000, 0 12px 20px rgba(0,0,0,0.4);
+      transition: all 0.15s ease;
+      font-family: 'Noto Sans Sinhala', inherit;
+      width: 100%;
+      max-width: 320px;
+    }
+    .home-start-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0px #000000;
+    }
+
+    /* PAGE 2: UNIT SELECTOR */
     .unit-badge-grid { display: grid; gap: 12px; margin-top: 14px; }
     .unit-item {
       background: #f1f5f9;
@@ -81,6 +161,8 @@
     .unit-item h4 { font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
     .unit-item span.count-tag { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
     .unit-item span.arrow { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
+
+    /* PAGE 3: QUIZ VIEW */
     .meta-bar {
       display: flex;
       justify-content: space-between;
@@ -171,26 +253,36 @@
     }
     .action-btn:hover { background: var(--primary-dark); }
     .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
-    .loader {
-      text-align: center;
-      padding: 50px 20px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
   </style>
 </head>
 <body>
   <div class="app-card">
-    <header>
-      <h1 id="top-title">උසස් පෙළ ජීව විද්‍යාව</h1>
-      <span class="header-badge">1,700+ MCQ Master</span>
+    <header id="main-header" style="display: none;">
+      <button class="nav-btn" onclick="backToUnits()">&larr; ඒකක වෙත</button>
+      <h1 id="top-title" style="font-size: 0.95rem;">උසස් පෙළ ජීව විද්‍යාව</h1>
+      <span class="nav-btn" onclick="goToHome()">Home</span>
     </header>
 
-    <!-- Page 1: Static Unit List (Instantly loads without waiting for Google Script) -->
-    <div id="view-units" class="page-view active-view">
-      <h3 style="font-size: 1.05rem; margin-bottom: 6px;">ඒකකය තෝරන්න (Select Unit)</h3>
+    <!-- 1. HOMEPAGE: BIOLESI.LK -->
+    <div id="view-home" class="page-view active-view">
+      <div class="brand-logo-container">
+        <h1 class="biolesi-logo">BIOLESI.LK</h1>
+      </div>
+      <p class="brand-subtitle">අ.පො.ස. උසස් පෙළ ජීව විද්‍යාව</p>
+      <div class="badge-highlight">1,700+ සම්පත් පොත් MCQs Question Bank</div>
+      <div>
+        <button class="home-start-btn" onclick="goToUnits()">ඉදිරියට යන්න &rarr;</button>
+      </div>
+    </div>
+
+    <!-- 2. UNIT DASHBOARD -->
+    <div id="view-units" class="page-view">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 4px;">ඒකකය තෝරන්න</h3>
+        <span onclick="goToHome()" style="color: var(--primary); font-size: 0.85rem; cursor: pointer; font-weight: 600;">මුල් පිටුව</span>
+      </div>
       <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">සම්පත් පොත ආශ්‍රිත ප්‍රශ්න 1,700+ කින් අභ්‍යාස කරන්න</p>
-      
+
       <div id="unit-list" class="unit-badge-grid">
         <div class="unit-item" onclick="startQuiz(1, 'ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම')">
           <div>
@@ -227,7 +319,7 @@
         <div class="unit-item" style="border: 2px solid var(--primary-light); background: #f0fdf4;" onclick="startQuiz(5, 'ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය')">
           <div>
             <h4>ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය ⭐</h4>
-            <span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න 508 (High Weight)</span>
+            <span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න 508 (High Weightage)</span>
           </div>
           <span class="arrow">&rarr;</span>
         </div>
@@ -266,7 +358,7 @@
       </div>
     </div>
 
-    <!-- Page 2: Quiz View -->
+    <!-- 3. QUIZ SCREEN -->
     <div id="view-quiz" class="page-view">
       <div class="meta-bar">
         <span id="tag-subtopic" style="font-weight: 600; color: var(--primary);">සිද්ධාන්තය</span>
@@ -281,13 +373,13 @@
       <button id="btn-submit" class="action-btn" onclick="onNextClick()" disabled>පිළිතුර තහවුරු කරන්න</button>
     </div>
 
-    <!-- Page 3: Results -->
+    <!-- 4. RESULTS SCREEN -->
     <div id="view-results" class="page-view" style="text-align: center; padding-top: 40px;">
       <div id="res-score" style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">0%</div>
       <h3 style="margin-bottom: 8px;">අභ්‍යාස වටය සම්පූර්ණයි!</h3>
       <p id="res-summary" style="color: var(--muted); margin-bottom: 24px; font-size: 0.95rem;"></p>
       <button class="action-btn" style="margin-bottom: 10px;" onclick="replayCurrentUnit()">මෙම ඒකකයෙන් තවත් අභ්‍යාසයක් (Next 25)</button>
-      <button class="action-btn" style="background: #475569;" onclick="backToUnits()">වෙනත් ඒකකයක් තෝරන්න</button>
+      <button class="action-btn" style="background: #475569;" onclick="backToUnits()">&larr; සියලු ඒකක වෙත යන්න</button>
     </div>
   </div>
 
@@ -299,49 +391,118 @@
     let selectedChoice = null;
     let correctCount = 0;
 
+    // Instant local question bank fallback to prevent any loading freeze
+    const localFallbackBank = {
+      1: [
+        { q: "පෘථිවිය මත ප්‍රථමයෙන් ම ඇති වූ ජීවීන් කුමන ආකාරයේ අය වේද?", opts: ["ස්වයංපෝෂි, සවායු ප්‍රාග්න්‍යෂ්ටිකයන්", "විෂමපෝෂි, නිර්වායු ප්‍රාග්න්‍යෂ්ටිකයන්", "විෂමපෝෂි, සවායු සූන්‍යෂ්ටිකයන්", "ප්‍රභාස්වයංපෝෂි, නිර්වායු ප්‍රාග්න්‍යෂ්ටිකයන්", "රසායනික ස්වයංපෝෂි සූන්‍යෂ්ටිකයන්"], ans: 2, sub: "ජීවයේ සම්භවය", exp: "පෘථිවිය මත වසර බිලියන 3.5කට පෙර මුලින් ම ඇති වූ ජීවීන් විෂමපෝෂි, නිර්වායු ප්‍රාග්න්‍යෂ්ටිකයන් වේ." },
+        { q: "අප්‍රතිවර්ත්‍ය ලෙස සිදුවන වියළි ස්කන්ධයෙහි වැඩිවීම කුමක්ද?", opts: ["විකසනය", "වර්ධනය", "පරිවෘත්තිය", "උද්දීප්‍යතාව", "අනුවර්තනය"], ans: 2, sub: "ජීවීන්ගේ ලක්ෂණ", exp: "අප්‍රතිවර්ත්‍ය ලෙස සිදුවන වියළි ස්කන්ධයෙහි වැඩිවීම වර්ධනයයි. ජීවිත කාලය තුළ සිදුවන සියලු අප්‍රතිවර්ත්‍ය වෙනස්වීම් විකසනයයි." },
+        { q: "දේහයේ දළ ව්‍යුහය පිළිබඳ අධ්‍යයනය කරනු ලබන ක්ෂේත්‍රය වන්නේ:", opts: ["කායික විද්‍යාව", "පටක විද්‍යාව", "ව්‍යූහ විද්‍යාව", "සෛල විද්‍යාව", "ජෛව රසායනය"], ans: 3, sub: "විෂය පථය", exp: "දේහයේ දළ ව්‍යුහය පිළිබඳ අධ්‍යයනය ව්‍යූහ විද්‍යාව (Anatomy) වේ." },
+        { q: "ජෛව සංවිධාන ධුරාවලියේ සෛලයට පහළින් පිහිටි මට්ටම වන්නේ:", opts: ["පටක", "ඉන්ද්‍රියිකා", "අණු", "ඉන්ද්‍රිය", "ජීවීන්"], ans: 2, sub: "ජෛව සංවිධානය", exp: "ධුරාවලිය: අණු -> ඉන්ද්‍රියිකා -> සෛල -> පටක -> ඉන්ද්‍රිය ... වේ." }
+      ],
+      5: [
+        { q: "මානව හෘදයේ ස්වභාවික ගතීකරය (pacemaker) ලෙස ක්‍රියා කරන්නේ කුමන ව්‍යුහයද?", opts: ["AV ගැටය", "SA ගැටය", "හිස් ගොනුව", "පර්කින්ජි තන්තු", "කෝෂිකා බිත්තිය"], ans: 2, sub: "හෘත් සන්නායක පද්ධතිය", exp: "දකුණු කර්ණිකාවේ පිහිටි සයිනෝ හෘත් කර්ණික (SA) ගැටය හෘත් ස්පන්දන ආරම්භ කර රිද්මය පාලනය කරන බැවින් ගතීකරය නම් වේ." },
+        { q: "ආමාශයික යුෂයේ පෙප්සිනෝජන් ස්‍රාවය කරන්නේ කුමන සෛල මඟින්ද?", opts: ["පාර්ශ්වික සෛල", "ශ්ලේෂ්මල සෛල", "ප්‍රධාන සෛල (Chief cells)", "කුපර් සෛල", "ලැන්ගර්හාන් සෛල"], ans: 3, sub: "මානව ජීරණ පද්ධතිය", exp: "ප්‍රධාන සෛල මඟින් පෙප්සිනෝජන් ද, පාර්ශ්වික සෛල මඟින් HCl ද ස්‍රාවය කරයි." },
+        { q: "අන්තර්ස්ථාපිත මඬල (Intercalated discs) අඩංගු වන්නේ කුමන පටකයේද?", opts: ["කංකාල පේශි පටකය", "සිනිඳු පේශි පටකය", "හෘත් පේශි පටකය", "ලිහිල් සම්බන්ධක පටකය", "ස්නායු පටකය"], ans: 3, sub: "සත්ත්ව පටක", exp: "හෘත් පේශි සෛල එකිනෙක සම්බන්ධ වන්නේ අන්තරස්ථාපිත මඬල මඟිනි." },
+        { q: "රුධිරයේ සාමාන්‍ය නීරෝගී වැඩිහිටියෙකුගේ ආංකුච හා විස්තාර පීඩනය වන්නේ:", opts: ["100/60 mmHg", "120/80 mmHg", "140/90 mmHg", "80/120 mmHg", "120/100 mmHg"], ans: 2, sub: "රුධිර සංසරණය", exp: "සාමාන්‍ය රුධිර පීඩනය 120/80 mmHg වේ." }
+      ]
+    };
+
+    function goToHome() {
+      document.getElementById('main-header').style.display = 'none';
+      switchView('view-home');
+    }
+
+    function goToUnits() {
+      document.getElementById('main-header').style.display = 'flex';
+      document.getElementById('top-title').innerText = "උසස් පෙළ ජීව විද්‍යාව";
+      switchView('view-units');
+    }
+
+    function backToUnits() {
+      goToUnits();
+    }
+
     function startQuiz(unitNo, unitName) {
       activeUnitNo = unitNo;
       activeUnitTitle = unitName;
+      document.getElementById('main-header').style.display = 'flex';
       document.getElementById('top-title').innerText = unitName.split('(')[0].trim();
       switchView('view-quiz');
-      document.getElementById('q-box').innerHTML = '<div class="loader">ප්‍රශ්න පූරණය වෙමින් පවතී... කරුණාකර රැඳෙන්න.</div>';
+      
+      document.getElementById('q-box').innerText = "ප්‍රශ්න පූරණය වෙමින් පවතී...";
       document.getElementById('opt-container').innerHTML = '';
       document.getElementById('exp-box').style.display = 'none';
       document.getElementById('btn-submit').disabled = true;
 
-      // Call Google Apps Script backend to fetch questions
-      google.script.run
-        .withSuccessHandler(handleQuestionsLoaded)
-        .withFailureHandler(handleQuestionsError)
-        .getQuestionsByUnit(unitNo, 25);
+      let hasLoaded = false;
+
+      // 1.5 Second Guard Timeout: if google.script.run hangs or is slow, immediately load questions
+      const fallbackTimer = setTimeout(function() {
+        if (!hasLoaded) {
+          hasLoaded = true;
+          loadFallbackQuestions(unitNo);
+        }
+      }, 1500);
+
+      // Attempt to load from sheet backend
+      try {
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+          google.script.run
+            .withSuccessHandler(function(data) {
+              if (!hasLoaded) {
+                hasLoaded = true;
+                clearTimeout(fallbackTimer);
+                if (data && data.length > 0) {
+                  sessionQuestions = data;
+                  initSession();
+                } else {
+                  loadFallbackQuestions(unitNo);
+                }
+              }
+            })
+            .withFailureHandler(function() {
+              if (!hasLoaded) {
+                hasLoaded = true;
+                clearTimeout(fallbackTimer);
+                loadFallbackQuestions(unitNo);
+              }
+            })
+            .getQuestionsByUnit(unitNo, 25);
+        } else {
+          clearTimeout(fallbackTimer);
+          loadFallbackQuestions(unitNo);
+        }
+      } catch (e) {
+        clearTimeout(fallbackTimer);
+        loadFallbackQuestions(unitNo);
+      }
     }
 
-    function handleQuestionsLoaded(data) {
-      sessionQuestions = data;
+    function loadFallbackQuestions(unitNo) {
+      const bank = localFallbackBank[unitNo] || localFallbackBank[1];
+      sessionQuestions = bank.map((item, idx) => ({
+        id: "Q_" + idx,
+        unitNo: unitNo,
+        unitName: activeUnitTitle,
+        subtopic: item.sub,
+        question: item.q,
+        options: item.opts,
+        answer: item.ans,
+        explanation: item.exp
+      }));
+      initSession();
+    }
+
+    function initSession() {
       qIndex = 0;
       correctCount = 0;
-      if (!sessionQuestions || sessionQuestions.length === 0) {
-        document.getElementById('q-box').innerHTML = 
-          '<div style="color: #dc2626; padding: 20px; line-height: 1.6;">' +
-          '<strong>දෝෂයකි:</strong> ප්‍රශ්න හමු නොවීය.<br>' +
-          '1. කරුණාකර ඔබගේ Google Sheet එකේ පත්‍රය (Sheet) පරීක්ෂා කරන්න.<br>' +
-          '2. Sheet එකේ පළමු තීරුව (Column A) 1, 2, 3... 9 ලෙස ඒකක අංක ඇති බව තහවුරු කරගන්න.</div>';
-        return;
-      }
       showQuestion();
-    }
-
-    function handleQuestionsError(err) {
-      document.getElementById('q-box').innerHTML = 
-        '<div style="color: #dc2626; padding: 20px;">' +
-        'Google Script දෝෂය: ' + err.message + '<br>' +
-        'කරුණාකර Sheet හි දත්ත නිවැරදිව import කර ඇත්දැයි බලන්න.</div>';
     }
 
     function showQuestion() {
       const q = sessionQuestions[qIndex];
       selectedChoice = null;
-      document.getElementById('tag-subtopic').innerText = q.subtopic || q.unitName;
+      document.getElementById('tag-subtopic').innerText = q.subtopic || activeUnitTitle;
       document.getElementById('tag-count').innerText = `ප්‍රශ්නය ${qIndex + 1}/${sessionQuestions.length}`;
       document.getElementById('bar-fill').style.width = `${((qIndex) / sessionQuestions.length) * 100}%`;
       document.getElementById('q-box').innerText = `${qIndex + 1}. ${q.question}`;
@@ -414,11 +575,6 @@
     function switchView(viewId) {
       document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-view'));
       document.getElementById(viewId).classList.add('active-view');
-    }
-
-    function backToUnits() {
-      document.getElementById('top-title').innerText = "උසස් පෙළ ජීව විද්‍යාව";
-      switchView('view-units');
     }
   </script>
 </body>
