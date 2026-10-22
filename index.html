@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <title>A/L Biology 1700+ MCQ Master</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-light: #10b981;
+      --primary-dark: #065f46;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --correct: #16a34a;
+      --correct-bg: #f0fdf4;
+      --wrong: #dc2626;
+      --wrong-bg: #fef2f2;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans Sinhala', 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .app-card {
+      width: 100%;
+      max-width: 640px;
+      min-height: 100vh;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    header h1 { font-size: 1.05rem; font-weight: 700; }
+    .header-badge {
+      font-size: 0.75rem;
+      background: rgba(255,255,255,0.22);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .page-view { display: none; padding: 20px; flex: 1; }
+    .active-view { display: block; }
+    .unit-badge-grid { display: grid; gap: 12px; margin-top: 14px; }
+    .unit-item {
+      background: #f1f5f9;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .unit-item:hover, .unit-item:active {
+      border-color: var(--primary-light);
+      background: #ecfdf5;
+      transform: translateY(-1px);
+    }
+    .unit-item h4 { font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+    .unit-item span.count-tag { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
+    .unit-item span.arrow { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .bar-bg {
+      background: #e2e8f0;
+      height: 6px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      background: var(--primary-light);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .q-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+      line-height: 1.4;
+    }
+    .option-btn:hover { border-color: var(--primary-light); }
+    .option-btn.selected { border-color: #3b82f6; background: #eff6ff; }
+    .option-btn.correct { border-color: var(--correct); background: var(--correct-bg); color: #166534; font-weight: 600; }
+    .option-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); color: #991b1b; }
+    .badge {
+      background: #e2e8f0;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .option-btn.correct .badge { background: var(--correct); color: white; }
+    .option-btn.wrong .badge { background: var(--wrong); color: white; }
+    .explanation-card {
+      margin-top: 16px;
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #334155;
+      display: none;
+    }
+    .action-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .action-btn:hover { background: var(--primary-dark); }
+    .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+    .loader {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-card">
+    <header>
+      <h1 id="top-title">උසස් පෙළ ජීව විද්‍යාව</h1>
+      <span class="header-badge">1,700+ MCQ Master</span>
+    </header>
+
+    <!-- Screen 1: Unit Selection -->
+    <div id="view-units" class="page-view active-view">
+      <h3 style="font-size: 1.05rem; margin-bottom: 6px;">ඒකකය තෝරන්න (Select Unit)</h3>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">සම්පත් පොත ආශ්‍රිත ප්‍රශ්න 1,700+ කින් අභ්‍යාස කරන්න</p>
+      <div id="unit-list" class="unit-badge-grid"></div>
+    </div>
+
+    <!-- Screen 2: Interactive Quiz Mode -->
+    <div id="view-quiz" class="page-view">
+      <div class="meta-bar">
+        <span id="tag-subtopic" style="font-weight: 600; color: var(--primary);">සිද්ධාන්තය</span>
+        <span id="tag-count">ප්‍රශ්නය 1/25</span>
+      </div>
+      <div class="bar-bg">
+        <div id="bar-fill" class="bar-fill"></div>
+      </div>
+      <div id="q-box" class="q-text"></div>
+      <div id="opt-container"></div>
+      <div id="exp-box" class="explanation-card"></div>
+      <button id="btn-submit" class="action-btn" onclick="onNextClick()" disabled>පිළිතුර තහවුරු කරන්න</button>
+    </div>
+
+    <!-- Screen 3: Results & Summary -->
+    <div id="view-results" class="page-view" style="text-align: center; padding-top: 40px;">
+      <div id="res-score" style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">0%</div>
+      <h3 style="margin-bottom: 8px;">අභ්‍යාස වටය සම්පූර්ණයි!</h3>
+      <p id="res-summary" style="color: var(--muted); margin-bottom: 24px; font-size: 0.95rem;"></p>
+      <button class="action-btn" style="margin-bottom: 10px;" onclick="replayCurrentUnit()">මෙම ඒකකයෙන් තවත් අභ්‍යාසයක් (Next 25)</button>
+      <button class="action-btn" style="background: #475569;" onclick="backToUnits()">වෙනත් ඒකකයක් තෝරන්න</button>
+    </div>
+  </div>
+
+  <script>
+    let activeUnitNo = 1;
+    let activeUnitTitle = "";
+    let sessionQuestions = [];
+    let qIndex = 0;
+    let selectedChoice = null;
+    let correctCount = 0;
+
+    window.onload = function() {
+      google.script.run.withSuccessHandler(renderUnitList).getUnitList();
+    };
+
+    function renderUnitList(units) {
+      const container = document.getElementById('unit-list');
+      container.innerHTML = '';
+      units.forEach(u => {
+        const item = document.createElement('div');
+        item.className = 'unit-item';
+        item.innerHTML = `
+          <div>
+            <h4>${u.name}</h4>
+            <span class="count-tag">${u.count}</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        `;
+        item.onclick = () => loadUnit(u.no, u.name);
+        container.appendChild(item);
+      });
+    }
+
+    function loadUnit(unitNo, unitName) {
+      activeUnitNo = unitNo;
+      activeUnitTitle = unitName;
+      document.getElementById('top-title').innerText = unitName.split('(')[0].trim();
+      switchView('view-quiz');
+      document.getElementById('q-box').innerHTML = '<div class="loader">ප්‍රශ්න පූරණය වෙමින් පවතී... කරුණාකර රැඳෙන්න.</div>';
+      document.getElementById('opt-container').innerHTML = '';
+      document.getElementById('exp-box').style.display = 'none';
+      document.getElementById('btn-submit').disabled = true;
+
+      // Loads 25 randomized questions per practice round for high mobile responsiveness
+      google.script.run.withSuccessHandler(data => {
+        sessionQuestions = data;
+        qIndex = 0;
+        correctCount = 0;
+        if (!sessionQuestions || sessionQuestions.length === 0) {
+          document.getElementById('q-box').innerHTML = 'ප්‍රශ්න පූරණය කළ නොහැක. කරුණාකර Google Sheet එකට දත්ත ආයාත කර ඇත්දැයි බලන්න.';
+          return;
+        }
+        showQuestion();
+      }).getQuestionsByUnit(unitNo, 25);
+    }
+
+    function showQuestion() {
+      const q = sessionQuestions[qIndex];
+      selectedChoice = null;
+      document.getElementById('tag-subtopic').innerText = q.subtopic || q.unitName;
+      document.getElementById('tag-count').innerText = `ප්‍රශ්නය ${qIndex + 1}/${sessionQuestions.length}`;
+      document.getElementById('bar-fill').style.width = `${((qIndex) / sessionQuestions.length) * 100}%`;
+      document.getElementById('q-box').innerText = `${qIndex + 1}. ${q.question}`;
+
+      const container = document.getElementById('opt-container');
+      container.innerHTML = '';
+      const numbers = ['(1)', '(2)', '(3)', '(4)', '(5)'];
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="badge">${numbers[idx]}</span><span>${opt}</span>`;
+        btn.onclick = () => pickOption(idx + 1, btn);
+        container.appendChild(btn);
+      });
+
+      document.getElementById('exp-box').style.display = 'none';
+      document.getElementById('btn-submit').disabled = true;
+      document.getElementById('btn-submit').innerText = "පිළිතුර තහවුරු කරන්න";
+    }
+
+    function pickOption(choiceNum, element) {
+      if (document.getElementById('exp-box').style.display === 'block') return;
+      selectedChoice = choiceNum;
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      element.classList.add('selected');
+      document.getElementById('btn-submit').disabled = false;
+    }
+
+    function onNextClick() {
+      const q = sessionQuestions[qIndex];
+      const btn = document.getElementById('btn-submit');
+      const buttons = document.querySelectorAll('.option-btn');
+
+      if (btn.innerText === "පිළිතුර තහවුරු කරන්න") {
+        if (selectedChoice === q.answer) {
+          correctCount++;
+          buttons[selectedChoice - 1].classList.add('correct');
+        } else {
+          buttons[selectedChoice - 1].classList.add('wrong');
+          buttons[q.answer - 1].classList.add('correct');
+        }
+
+        const exp = document.getElementById('exp-box');
+        exp.innerHTML = `<strong>විවරණය (Resource Book Citation):</strong><br>${q.explanation}`;
+        exp.style.display = 'block';
+
+        btn.innerText = (qIndex + 1 < sessionQuestions.length) ? "මීළඟ ප්‍රශ්නය &rarr;" : "ප්‍රතිඵල විශ්ලේෂණය";
+      } else {
+        qIndex++;
+        if (qIndex < sessionQuestions.length) {
+          showQuestion();
+        } else {
+          showSummary();
+        }
+      }
+    }
+
+    function showSummary() {
+      switchView('view-results');
+      const pct = Math.round((correctCount / sessionQuestions.length) * 100);
+      document.getElementById('res-score').innerText = `${pct}%`;
+      document.getElementById('res-summary').innerText = `මෙම වටයේ ප්‍රශ්න ${sessionQuestions.length} න් නිවැරදි පිළිතුරු: ${correctCount}`;
+    }
+
+    function replayCurrentUnit() {
+      loadUnit(activeUnitNo, activeUnitTitle);
+    }
+
+    function switchView(viewId) {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-view'));
+      document.getElementById(viewId).classList.add('active-view');
+    }
+
+    function backToUnits() {
+      document.getElementById('top-title').innerText = "උසස් පෙළ ජීව විද්‍යාව";
+      switchView('view-units');
+    }
+  </script>
+</body>
+</html>
