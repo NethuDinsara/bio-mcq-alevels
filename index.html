@@ -186,14 +186,87 @@
       <span class="header-badge">1,700+ MCQ Master</span>
     </header>
 
-    <!-- Screen 1: Unit Selection -->
+    <!-- Page 1: Static Unit List (Instantly loads without waiting for Google Script) -->
     <div id="view-units" class="page-view active-view">
       <h3 style="font-size: 1.05rem; margin-bottom: 6px;">ඒකකය තෝරන්න (Select Unit)</h3>
       <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">සම්පත් පොත ආශ්‍රිත ප්‍රශ්න 1,700+ කින් අභ්‍යාස කරන්න</p>
-      <div id="unit-list" class="unit-badge-grid"></div>
+      
+      <div id="unit-list" class="unit-badge-grid">
+        <div class="unit-item" onclick="startQuiz(1, 'ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම')">
+          <div>
+            <h4>ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම</h4>
+            <span class="count-tag">ප්‍රශ්න 125</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(2, 'ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම')">
+          <div>
+            <h4>ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම</h4>
+            <span class="count-tag">ප්‍රශ්න 390</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(3, 'ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය')">
+          <div>
+            <h4>ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය</h4>
+            <span class="count-tag">ප්‍රශ්න 190</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(4, 'ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය')">
+          <div>
+            <h4>ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය</h4>
+            <span class="count-tag">ප්‍රශ්න 186</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" style="border: 2px solid var(--primary-light); background: #f0fdf4;" onclick="startQuiz(5, 'ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය')">
+          <div>
+            <h4>ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය ⭐</h4>
+            <span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න 508 (High Weight)</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(6, 'ඒකකය 06: ප්‍රවේණිය')">
+          <div>
+            <h4>ඒකකය 06: ප්‍රවේණිය</h4>
+            <span class="count-tag">ප්‍රශ්න 80</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(7, 'ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය')">
+          <div>
+            <h4>ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය</h4>
+            <span class="count-tag">ප්‍රශ්න 75</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(8, 'ඒකකය 08: පාරිසරික ජීව විද්‍යාව')">
+          <div>
+            <h4>ඒකකය 08: පාරිසරික ජීව විද්‍යාව</h4>
+            <span class="count-tag">ප්‍රශ්න 70</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+
+        <div class="unit-item" onclick="startQuiz(9, 'ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව')">
+          <div>
+            <h4>ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව</h4>
+            <span class="count-tag">ප්‍රශ්න 100</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Screen 2: Interactive Quiz Mode -->
+    <!-- Page 2: Quiz View -->
     <div id="view-quiz" class="page-view">
       <div class="meta-bar">
         <span id="tag-subtopic" style="font-weight: 600; color: var(--primary);">සිද්ධාන්තය</span>
@@ -208,7 +281,7 @@
       <button id="btn-submit" class="action-btn" onclick="onNextClick()" disabled>පිළිතුර තහවුරු කරන්න</button>
     </div>
 
-    <!-- Screen 3: Results & Summary -->
+    <!-- Page 3: Results -->
     <div id="view-results" class="page-view" style="text-align: center; padding-top: 40px;">
       <div id="res-score" style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">0%</div>
       <h3 style="margin-bottom: 8px;">අභ්‍යාස වටය සම්පූර්ණයි!</h3>
@@ -226,29 +299,7 @@
     let selectedChoice = null;
     let correctCount = 0;
 
-    window.onload = function() {
-      google.script.run.withSuccessHandler(renderUnitList).getUnitList();
-    };
-
-    function renderUnitList(units) {
-      const container = document.getElementById('unit-list');
-      container.innerHTML = '';
-      units.forEach(u => {
-        const item = document.createElement('div');
-        item.className = 'unit-item';
-        item.innerHTML = `
-          <div>
-            <h4>${u.name}</h4>
-            <span class="count-tag">${u.count}</span>
-          </div>
-          <span class="arrow">&rarr;</span>
-        `;
-        item.onclick = () => loadUnit(u.no, u.name);
-        container.appendChild(item);
-      });
-    }
-
-    function loadUnit(unitNo, unitName) {
+    function startQuiz(unitNo, unitName) {
       activeUnitNo = unitNo;
       activeUnitTitle = unitName;
       document.getElementById('top-title').innerText = unitName.split('(')[0].trim();
@@ -258,17 +309,33 @@
       document.getElementById('exp-box').style.display = 'none';
       document.getElementById('btn-submit').disabled = true;
 
-      // Loads 25 randomized questions per practice round for high mobile responsiveness
-      google.script.run.withSuccessHandler(data => {
-        sessionQuestions = data;
-        qIndex = 0;
-        correctCount = 0;
-        if (!sessionQuestions || sessionQuestions.length === 0) {
-          document.getElementById('q-box').innerHTML = 'ප්‍රශ්න පූරණය කළ නොහැක. කරුණාකර Google Sheet එකට දත්ත ආයාත කර ඇත්දැයි බලන්න.';
-          return;
-        }
-        showQuestion();
-      }).getQuestionsByUnit(unitNo, 25);
+      // Call Google Apps Script backend to fetch questions
+      google.script.run
+        .withSuccessHandler(handleQuestionsLoaded)
+        .withFailureHandler(handleQuestionsError)
+        .getQuestionsByUnit(unitNo, 25);
+    }
+
+    function handleQuestionsLoaded(data) {
+      sessionQuestions = data;
+      qIndex = 0;
+      correctCount = 0;
+      if (!sessionQuestions || sessionQuestions.length === 0) {
+        document.getElementById('q-box').innerHTML = 
+          '<div style="color: #dc2626; padding: 20px; line-height: 1.6;">' +
+          '<strong>දෝෂයකි:</strong> ප්‍රශ්න හමු නොවීය.<br>' +
+          '1. කරුණාකර ඔබගේ Google Sheet එකේ පත්‍රය (Sheet) පරීක්ෂා කරන්න.<br>' +
+          '2. Sheet එකේ පළමු තීරුව (Column A) 1, 2, 3... 9 ලෙස ඒකක අංක ඇති බව තහවුරු කරගන්න.</div>';
+        return;
+      }
+      showQuestion();
+    }
+
+    function handleQuestionsError(err) {
+      document.getElementById('q-box').innerHTML = 
+        '<div style="color: #dc2626; padding: 20px;">' +
+        'Google Script දෝෂය: ' + err.message + '<br>' +
+        'කරුණාකර Sheet හි දත්ත නිවැරදිව import කර ඇත්දැයි බලන්න.</div>';
     }
 
     function showQuestion() {
@@ -319,7 +386,7 @@
         }
 
         const exp = document.getElementById('exp-box');
-        exp.innerHTML = `<strong>විවරණය (Resource Book Citation):</strong><br>${q.explanation}`;
+        exp.innerHTML = `<strong>විවරණය (Resource Book):</strong><br>${q.explanation}`;
         exp.style.display = 'block';
 
         btn.innerText = (qIndex + 1 < sessionQuestions.length) ? "මීළඟ ප්‍රශ්නය &rarr;" : "ප්‍රතිඵල විශ්ලේෂණය";
@@ -341,7 +408,7 @@
     }
 
     function replayCurrentUnit() {
-      loadUnit(activeUnitNo, activeUnitTitle);
+      startQuiz(activeUnitNo, activeUnitTitle);
     }
 
     function switchView(viewId) {
