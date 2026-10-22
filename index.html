@@ -259,7 +259,6 @@
   </div>
 
   <script>
-    // ඔබේ ලබා දී ඇති Web App URL එක මෙහි ඇත
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwWVD3ie89ixhxst7dlZunYwjhLWMThR5t3ENLiMPc0p1yk-ehBe_YyPLlNFKNBJos/exec";
 
     let activeUnitNo = 1;
@@ -299,7 +298,6 @@
       switchView('view-subtopics');
     }
 
-    // 1. Sheet එකෙන් උපමාතෘකා ලබා ගැනීම (Fetch API හරහා)
     function openUnitSubtopics(unitNo, unitTitle) {
       activeUnitNo = unitNo;
       activeUnitTitle = unitTitle;
@@ -311,7 +309,10 @@
       switchView('view-subtopics');
       document.getElementById('subtopics-container').innerHTML = '<div class="loader-box">Sheet එකෙන් සැබෑ උපමාතෘකා පූරණය වෙමින් පවතී...</div>';
 
-      fetch(`${WEB_APP_URL}?action=getSubtopics&unitNo=${unitNo}`)
+      fetch(`${WEB_APP_URL}?action=getSubtopics&unitNo=${unitNo}`, {
+        method: 'GET',
+        redirect: 'follow'
+      })
         .then(response => response.json())
         .then(res => {
           if (res && res.subtopics && res.subtopics.length > 0) {
@@ -360,7 +361,6 @@
       });
     }
 
-    // 2. Sheet එකෙන් අදාළ ප්‍රශ්න ලබා ගැනීම (Fetch API හරහා)
     function startQuizWithFilter(subtopic, displaySubName) {
       activeSubtopic = subtopic;
       document.getElementById('top-title').innerText = displaySubName;
@@ -372,7 +372,10 @@
       document.getElementById('exp-box').style.display = 'none';
       document.getElementById('btn-submit').disabled = true;
 
-      fetch(`${WEB_APP_URL}?action=getQuestions&unitNo=${activeUnitNo}&subtopic=${encodeURIComponent(activeSubtopic)}`)
+      fetch(`${WEB_APP_URL}?action=getQuestions&unitNo=${activeUnitNo}&subtopic=${encodeURIComponent(activeSubtopic)}`, {
+        method: 'GET',
+        redirect: 'follow'
+      })
         .then(response => response.json())
         .then(questions => {
           if (questions && questions.length > 0) {
