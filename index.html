@@ -2,7 +2,7 @@
 <html lang="si">
 <head>
   <meta charset="UTF-8">
-  <title>BIOLESI.LK | A/L Biology 1,700+ MCQ Master</title>
+  <title>BIOLESI.LK | A/L Biology 1700+ MCQ Master</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -25,7 +25,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Noto Sans Sinhala', 'Inter', sans-serif;
-      background: #0f172a;
+      background: var(--bg);
       color: var(--text);
       display: flex;
       justify-content: center;
@@ -43,11 +43,11 @@
       position: relative;
     }
 
-    /* Top Navigation Bar */
+    /* Navigation Header */
     header {
       background: linear-gradient(135deg, #064e3b, #059669);
       color: #fff;
-      padding: 14px 18px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -56,25 +56,26 @@
       z-index: 50;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
+    header h1 { font-size: 0.95rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
     .nav-btn {
       background: rgba(255,255,255,0.2);
       border: 1px solid rgba(255,255,255,0.4);
       color: #fff;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 8px;
       font-size: 0.8rem;
       cursor: pointer;
       font-family: inherit;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
     .nav-btn:hover { background: rgba(255,255,255,0.3); }
 
     .page-view { display: none; padding: 20px; flex: 1; }
     .active-view { display: flex; flex-direction: column; }
 
-    /* PAGE 1: BIOLESI.LK BRAND LANDING PAGE */
+    /* 1. HOMEPAGE: BIOLESI.LK */
     #view-home {
       background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
       color: white;
@@ -83,10 +84,6 @@
       align-items: center;
       padding: 40px 24px;
       min-height: 100vh;
-    }
-    .brand-logo-container {
-      margin-bottom: 24px;
-      position: relative;
     }
     .biolesi-logo {
       font-family: 'Fredoka One', cursive, sans-serif;
@@ -102,13 +99,9 @@
         0px 6px 15px rgba(0,0,0,0.6);
       display: inline-block;
       transform: rotate(-1.5deg);
+      margin-bottom: 20px;
     }
-    .brand-subtitle {
-      font-size: 1.15rem;
-      color: #94a3b8;
-      margin-bottom: 12px;
-      font-weight: 500;
-    }
+    .brand-subtitle { font-size: 1.15rem; color: #94a3b8; margin-bottom: 12px; font-weight: 500; }
     .badge-highlight {
       background: rgba(16, 185, 129, 0.2);
       border: 1px solid var(--primary-light);
@@ -117,7 +110,6 @@
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 600;
-      display: inline-block;
       margin-bottom: 40px;
     }
     .home-start-btn {
@@ -131,7 +123,7 @@
       cursor: pointer;
       box-shadow: 0 6px 0px #000000, 0 12px 20px rgba(0,0,0,0.4);
       transition: all 0.15s ease;
-      font-family: 'Noto Sans Sinhala', inherit;
+      font-family: inherit;
       width: 100%;
       max-width: 320px;
     }
@@ -140,7 +132,7 @@
       box-shadow: 0 2px 0px #000000;
     }
 
-    /* PAGE 2: UNIT SELECTOR */
+    /* CARDS & ITEMS */
     .unit-badge-grid { display: grid; gap: 12px; margin-top: 14px; }
     .unit-item {
       background: #f1f5f9;
@@ -162,7 +154,7 @@
     .unit-item span.count-tag { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
     .unit-item span.arrow { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
 
-    /* PAGE 3: QUIZ VIEW */
+    /* QUIZ VIEW */
     .meta-bar {
       display: flex;
       justify-content: space-between;
@@ -249,21 +241,27 @@
       cursor: pointer;
       margin-top: 16px;
       font-family: inherit;
-      transition: background 0.2s;
     }
     .action-btn:hover { background: var(--primary-dark); }
     .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+    .loader-box {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
   <div class="app-card">
     <header id="main-header" style="display: none;">
-      <button class="nav-btn" onclick="backToUnits()">&larr; ඒකක වෙත</button>
-      <h1 id="top-title" style="font-size: 0.95rem;">උසස් පෙළ ජීව විද්‍යාව</h1>
-      <span class="nav-btn" onclick="goToHome()">Home</span>
+      <button id="btn-back-nav" class="nav-btn" onclick="handleBackNavigation()">&larr; ආපසු</button>
+      <h1 id="top-title">උසස් පෙළ ජීව විද්‍යාව</h1>
+      <button class="nav-btn" onclick="goToHome()">Home</button>
     </header>
 
-    <!-- 1. HOMEPAGE: BIOLESI.LK -->
+    <!-- 1. HOMEPAGE -->
     <div id="view-home" class="page-view active-view">
       <div class="brand-logo-container">
         <h1 class="biolesi-logo">BIOLESI.LK</h1>
@@ -277,14 +275,11 @@
 
     <!-- 2. UNIT DASHBOARD -->
     <div id="view-units" class="page-view">
-      <div style="display: flex; justify-content: space-between; align-items: baseline;">
-        <h3 style="font-size: 1.1rem; margin-bottom: 4px;">ඒකකය තෝරන්න</h3>
-        <span onclick="goToHome()" style="color: var(--primary); font-size: 0.85rem; cursor: pointer; font-weight: 600;">මුල් පිටුව</span>
-      </div>
-      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">සම්පත් පොත ආශ්‍රිත ප්‍රශ්න 1,700+ කින් අභ්‍යාස කරන්න</p>
+      <h3 style="font-size: 1.1rem; margin-bottom: 4px;">ඒකකය තෝරන්න (Select Unit)</h3>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">උපමාතෘකා හා ප්‍රශ්න වෙත පිවිසීමට ඒකකය ක්ලික් කරන්න</p>
 
-      <div id="unit-list" class="unit-badge-grid">
-        <div class="unit-item" onclick="startQuiz(1, 'ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම')">
+      <div class="unit-badge-grid">
+        <div class="unit-item" onclick="openUnitSubtopics(1, 'ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම')">
           <div>
             <h4>ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම</h4>
             <span class="count-tag">ප්‍රශ්න 125</span>
@@ -292,7 +287,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(2, 'ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම')">
+        <div class="unit-item" onclick="openUnitSubtopics(2, 'ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම')">
           <div>
             <h4>ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම</h4>
             <span class="count-tag">ප්‍රශ්න 390</span>
@@ -300,7 +295,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(3, 'ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය')">
+        <div class="unit-item" onclick="openUnitSubtopics(3, 'ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය')">
           <div>
             <h4>ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය</h4>
             <span class="count-tag">ප්‍රශ්න 190</span>
@@ -308,7 +303,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(4, 'ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය')">
+        <div class="unit-item" onclick="openUnitSubtopics(4, 'ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය')">
           <div>
             <h4>ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය</h4>
             <span class="count-tag">ප්‍රශ්න 186</span>
@@ -316,7 +311,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" style="border: 2px solid var(--primary-light); background: #f0fdf4;" onclick="startQuiz(5, 'ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය')">
+        <div class="unit-item" style="border: 2px solid var(--primary-light); background: #f0fdf4;" onclick="openUnitSubtopics(5, 'ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය')">
           <div>
             <h4>ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය ⭐</h4>
             <span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න 508 (High Weightage)</span>
@@ -324,7 +319,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(6, 'ඒකකය 06: ප්‍රවේණිය')">
+        <div class="unit-item" onclick="openUnitSubtopics(6, 'ඒකකය 06: ප්‍රවේණිය')">
           <div>
             <h4>ඒකකය 06: ප්‍රවේණිය</h4>
             <span class="count-tag">ප්‍රශ්න 80</span>
@@ -332,7 +327,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(7, 'ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය')">
+        <div class="unit-item" onclick="openUnitSubtopics(7, 'ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය')">
           <div>
             <h4>ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය</h4>
             <span class="count-tag">ප්‍රශ්න 75</span>
@@ -340,7 +335,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(8, 'ඒකකය 08: පාරිසරික ජීව විද්‍යාව')">
+        <div class="unit-item" onclick="openUnitSubtopics(8, 'ඒකකය 08: පාරිසරික ජීව විද්‍යාව')">
           <div>
             <h4>ඒකකය 08: පාරිසරික ජීව විද්‍යාව</h4>
             <span class="count-tag">ප්‍රශ්න 70</span>
@@ -348,7 +343,7 @@
           <span class="arrow">&rarr;</span>
         </div>
 
-        <div class="unit-item" onclick="startQuiz(9, 'ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව')">
+        <div class="unit-item" onclick="openUnitSubtopics(9, 'ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව')">
           <div>
             <h4>ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව</h4>
             <span class="count-tag">ප්‍රශ්න 100</span>
@@ -358,11 +353,23 @@
       </div>
     </div>
 
-    <!-- 3. QUIZ SCREEN -->
+    <!-- 3. SUBTOPIC SELECTION SCREEN -->
+    <div id="view-subtopics" class="page-view">
+      <div style="margin-bottom: 14px;">
+        <h3 id="subtopic-unit-title" style="font-size: 1.05rem; margin-bottom: 4px;">උපමාතෘකා</h3>
+        <p style="font-size: 0.85rem; color: var(--muted);">අභ්‍යාස කිරීමට අවශ්‍ය උපමාතෘකාව තෝරන්න</p>
+      </div>
+
+      <div id="subtopics-container" class="unit-badge-grid">
+        <div class="loader-box">උපමාතෘකා පූරණය වෙමින් පවතී... කරුණාකර රැඳෙන්න.</div>
+      </div>
+    </div>
+
+    <!-- 4. QUIZ SCREEN (ALL QUESTIONS LOADED) -->
     <div id="view-quiz" class="page-view">
       <div class="meta-bar">
-        <span id="tag-subtopic" style="font-weight: 600; color: var(--primary);">සිද්ධාන්තය</span>
-        <span id="tag-count">ප්‍රශ්නය 1/25</span>
+        <span id="tag-subtopic" style="font-weight: 600; color: var(--primary);">උපමාතෘකාව</span>
+        <span id="tag-count" style="font-weight: 700;">ප්‍රශ්නය 1/..</span>
       </div>
       <div class="bar-bg">
         <div id="bar-fill" class="bar-fill"></div>
@@ -373,39 +380,25 @@
       <button id="btn-submit" class="action-btn" onclick="onNextClick()" disabled>පිළිතුර තහවුරු කරන්න</button>
     </div>
 
-    <!-- 4. RESULTS SCREEN -->
+    <!-- 5. RESULTS SCREEN -->
     <div id="view-results" class="page-view" style="text-align: center; padding-top: 40px;">
       <div id="res-score" style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">0%</div>
-      <h3 style="margin-bottom: 8px;">අභ්‍යාස වටය සම්පූර්ණයි!</h3>
+      <h3 style="margin-bottom: 8px;">අභ්‍යාසය සම්පූර්ණ කරන ලදි!</h3>
       <p id="res-summary" style="color: var(--muted); margin-bottom: 24px; font-size: 0.95rem;"></p>
-      <button class="action-btn" style="margin-bottom: 10px;" onclick="replayCurrentUnit()">මෙම ඒකකයෙන් තවත් අභ්‍යාසයක් (Next 25)</button>
-      <button class="action-btn" style="background: #475569;" onclick="backToUnits()">&larr; සියලු ඒකක වෙත යන්න</button>
+      <button class="action-btn" style="margin-bottom: 10px;" onclick="replayCurrentQuiz()">මෙම ප්‍රශ්න නැවත කරන්න</button>
+      <button class="action-btn" style="background: #475569;" onclick="backToSubtopics()">&larr; උපමාතෘකා වෙත යන්න</button>
     </div>
   </div>
 
   <script>
     let activeUnitNo = 1;
     let activeUnitTitle = "";
-    let sessionQuestions = [];
+    let activeSubtopic = "ALL";
+    let currentQuestions = [];
     let qIndex = 0;
     let selectedChoice = null;
     let correctCount = 0;
-
-    // Instant local question bank fallback to prevent any loading freeze
-    const localFallbackBank = {
-      1: [
-        { q: "පෘථිවිය මත ප්‍රථමයෙන් ම ඇති වූ ජීවීන් කුමන ආකාරයේ අය වේද?", opts: ["ස්වයංපෝෂි, සවායු ප්‍රාග්න්‍යෂ්ටිකයන්", "විෂමපෝෂි, නිර්වායු ප්‍රාග්න්‍යෂ්ටිකයන්", "විෂමපෝෂි, සවායු සූන්‍යෂ්ටිකයන්", "ප්‍රභාස්වයංපෝෂි, නිර්වායු ප්‍රාග්න්‍යෂ්ටිකයන්", "රසායනික ස්වයංපෝෂි සූන්‍යෂ්ටිකයන්"], ans: 2, sub: "ජීවයේ සම්භවය", exp: "පෘථිවිය මත වසර බිලියන 3.5කට පෙර මුලින් ම ඇති වූ ජීවීන් විෂමපෝෂි, නිර්වායු ප්‍රාග්න්‍යෂ්ටිකයන් වේ." },
-        { q: "අප්‍රතිවර්ත්‍ය ලෙස සිදුවන වියළි ස්කන්ධයෙහි වැඩිවීම කුමක්ද?", opts: ["විකසනය", "වර්ධනය", "පරිවෘත්තිය", "උද්දීප්‍යතාව", "අනුවර්තනය"], ans: 2, sub: "ජීවීන්ගේ ලක්ෂණ", exp: "අප්‍රතිවර්ත්‍ය ලෙස සිදුවන වියළි ස්කන්ධයෙහි වැඩිවීම වර්ධනයයි. ජීවිත කාලය තුළ සිදුවන සියලු අප්‍රතිවර්ත්‍ය වෙනස්වීම් විකසනයයි." },
-        { q: "දේහයේ දළ ව්‍යුහය පිළිබඳ අධ්‍යයනය කරනු ලබන ක්ෂේත්‍රය වන්නේ:", opts: ["කායික විද්‍යාව", "පටක විද්‍යාව", "ව්‍යූහ විද්‍යාව", "සෛල විද්‍යාව", "ජෛව රසායනය"], ans: 3, sub: "විෂය පථය", exp: "දේහයේ දළ ව්‍යුහය පිළිබඳ අධ්‍යයනය ව්‍යූහ විද්‍යාව (Anatomy) වේ." },
-        { q: "ජෛව සංවිධාන ධුරාවලියේ සෛලයට පහළින් පිහිටි මට්ටම වන්නේ:", opts: ["පටක", "ඉන්ද්‍රියිකා", "අණු", "ඉන්ද්‍රිය", "ජීවීන්"], ans: 2, sub: "ජෛව සංවිධානය", exp: "ධුරාවලිය: අණු -> ඉන්ද්‍රියිකා -> සෛල -> පටක -> ඉන්ද්‍රිය ... වේ." }
-      ],
-      5: [
-        { q: "මානව හෘදයේ ස්වභාවික ගතීකරය (pacemaker) ලෙස ක්‍රියා කරන්නේ කුමන ව්‍යුහයද?", opts: ["AV ගැටය", "SA ගැටය", "හිස් ගොනුව", "පර්කින්ජි තන්තු", "කෝෂිකා බිත්තිය"], ans: 2, sub: "හෘත් සන්නායක පද්ධතිය", exp: "දකුණු කර්ණිකාවේ පිහිටි සයිනෝ හෘත් කර්ණික (SA) ගැටය හෘත් ස්පන්දන ආරම්භ කර රිද්මය පාලනය කරන බැවින් ගතීකරය නම් වේ." },
-        { q: "ආමාශයික යුෂයේ පෙප්සිනෝජන් ස්‍රාවය කරන්නේ කුමන සෛල මඟින්ද?", opts: ["පාර්ශ්වික සෛල", "ශ්ලේෂ්මල සෛල", "ප්‍රධාන සෛල (Chief cells)", "කුපර් සෛල", "ලැන්ගර්හාන් සෛල"], ans: 3, sub: "මානව ජීරණ පද්ධතිය", exp: "ප්‍රධාන සෛල මඟින් පෙප්සිනෝජන් ද, පාර්ශ්වික සෛල මඟින් HCl ද ස්‍රාවය කරයි." },
-        { q: "අන්තර්ස්ථාපිත මඬල (Intercalated discs) අඩංගු වන්නේ කුමන පටකයේද?", opts: ["කංකාල පේශි පටකය", "සිනිඳු පේශි පටකය", "හෘත් පේශි පටකය", "ලිහිල් සම්බන්ධක පටකය", "ස්නායු පටකය"], ans: 3, sub: "සත්ත්ව පටක", exp: "හෘත් පේශි සෛල එකිනෙක සම්බන්ධ වන්නේ අන්තරස්ථාපිත මඬල මඟිනි." },
-        { q: "රුධිරයේ සාමාන්‍ය නීරෝගී වැඩිහිටියෙකුගේ ආංකුච හා විස්තාර පීඩනය වන්නේ:", opts: ["100/60 mmHg", "120/80 mmHg", "140/90 mmHg", "80/120 mmHg", "120/100 mmHg"], ans: 2, sub: "රුධිර සංසරණය", exp: "සාමාන්‍ය රුධිර පීඩනය 120/80 mmHg වේ." }
-      ]
-    };
+    let currentScreen = "view-home";
 
     function goToHome() {
       document.getElementById('main-header').style.display = 'none';
@@ -415,96 +408,119 @@
     function goToUnits() {
       document.getElementById('main-header').style.display = 'flex';
       document.getElementById('top-title').innerText = "උසස් පෙළ ජීව විද්‍යාව";
+      document.getElementById('btn-back-nav').innerHTML = "&larr; මුල් පිටුව";
       switchView('view-units');
     }
 
-    function backToUnits() {
-      goToUnits();
+    function handleBackNavigation() {
+      if (currentScreen === 'view-quiz' || currentScreen === 'view-results') {
+        backToSubtopics();
+      } else if (currentScreen === 'view-subtopics') {
+        goToUnits();
+      } else if (currentScreen === 'view-units') {
+        goToHome();
+      }
     }
 
-    function startQuiz(unitNo, unitName) {
+    function backToSubtopics() {
+      document.getElementById('top-title').innerText = activeUnitTitle.split('(')[0].trim();
+      document.getElementById('btn-back-nav').innerHTML = "&larr; ඒකක වෙත";
+      switchView('view-subtopics');
+    }
+
+    /* Step A: When user clicks a unit, load its real Subtopics from the Google Sheet */
+    function openUnitSubtopics(unitNo, unitTitle) {
       activeUnitNo = unitNo;
-      activeUnitTitle = unitName;
+      activeUnitTitle = unitTitle;
       document.getElementById('main-header').style.display = 'flex';
-      document.getElementById('top-title').innerText = unitName.split('(')[0].trim();
+      document.getElementById('top-title').innerText = unitTitle.split('(')[0].trim();
+      document.getElementById('btn-back-nav').innerHTML = "&larr; ඒකක වෙත";
+      document.getElementById('subtopic-unit-title').innerText = unitTitle;
+
+      switchView('view-subtopics');
+      document.getElementById('subtopics-container').innerHTML = '<div class="loader-box">Sheet එකෙන් උපමාතෘකා පූරණය වෙමින් පවතී...</div>';
+
+      google.script.run
+        .withSuccessHandler(renderSubtopicsList)
+        .withFailureHandler(function(err) {
+          document.getElementById('subtopics-container').innerHTML = 
+            '<div style="color: #dc2626; padding: 20px;">' +
+            'උපමාතෘකා පූරණය අසාර්ථක විය: ' + err.message + '<br>' +
+            '<button class="action-btn" onclick="loadAllUnitQuestions()">මෙම ඒකකයේ සියලු ප්‍රශ්න අරඹන්න</button></div>';
+        })
+        .getSubtopicsForUnit(unitNo);
+    }
+
+    function renderSubtopicsList(res) {
+      const container = document.getElementById('subtopics-container');
+      container.innerHTML = '';
+
+      // Option 1: ALL questions in this Unit
+      const allItem = document.createElement('div');
+      allItem.className = 'unit-item';
+      allItem.style.border = '2px solid var(--primary-light)';
+      allItem.style.background = '#f0fdf4';
+      allItem.innerHTML = `
+        <div>
+          <h4 style="color: #047857;">⭐ මෙම ඒකකයේ සියලුම ප්‍රශ්න (All Questions)</h4>
+          <span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න ${res.totalCount} ක් අඩංගුයි</span>
+        </div>
+        <span class="arrow">&rarr;</span>
+      `;
+      allItem.onclick = () => startQuizWithFilter("ALL", `සියලුම ප්‍රශ්න (${res.totalCount})`);
+      container.appendChild(allItem);
+
+      // List each individual subtopic from the sheet
+      res.subtopics.forEach(sub => {
+        const item = document.createElement('div');
+        item.className = 'unit-item';
+        item.innerHTML = `
+          <div>
+            <h4>${sub.subtopic}</h4>
+            <span class="count-tag">ප්‍රශ්න ${sub.count}</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        `;
+        item.onclick = () => startQuizWithFilter(sub.subtopic, sub.subtopic);
+        container.appendChild(item);
+      });
+    }
+
+    /* Step B: Start Quiz with ALL questions belonging to that subtopic */
+    function startQuizWithFilter(subtopic, displaySubName) {
+      activeSubtopic = subtopic;
+      document.getElementById('top-title').innerText = displaySubName;
+      document.getElementById('btn-back-nav').innerHTML = "&larr; උපමාතෘකා";
       switchView('view-quiz');
-      
-      document.getElementById('q-box').innerText = "ප්‍රශ්න පූරණය වෙමින් පවතී...";
+
+      document.getElementById('q-box').innerHTML = '<div class="loader-box">ප්‍රශ්න සියල්ල පූරණය වෙමින් පවතී...</div>';
       document.getElementById('opt-container').innerHTML = '';
       document.getElementById('exp-box').style.display = 'none';
       document.getElementById('btn-submit').disabled = true;
 
-      let hasLoaded = false;
-
-      // 1.5 Second Guard Timeout: if google.script.run hangs or is slow, immediately load questions
-      const fallbackTimer = setTimeout(function() {
-        if (!hasLoaded) {
-          hasLoaded = true;
-          loadFallbackQuestions(unitNo);
-        }
-      }, 1500);
-
-      // Attempt to load from sheet backend
-      try {
-        if (typeof google !== 'undefined' && google.script && google.script.run) {
-          google.script.run
-            .withSuccessHandler(function(data) {
-              if (!hasLoaded) {
-                hasLoaded = true;
-                clearTimeout(fallbackTimer);
-                if (data && data.length > 0) {
-                  sessionQuestions = data;
-                  initSession();
-                } else {
-                  loadFallbackQuestions(unitNo);
-                }
-              }
-            })
-            .withFailureHandler(function() {
-              if (!hasLoaded) {
-                hasLoaded = true;
-                clearTimeout(fallbackTimer);
-                loadFallbackQuestions(unitNo);
-              }
-            })
-            .getQuestionsByUnit(unitNo, 25);
-        } else {
-          clearTimeout(fallbackTimer);
-          loadFallbackQuestions(unitNo);
-        }
-      } catch (e) {
-        clearTimeout(fallbackTimer);
-        loadFallbackQuestions(unitNo);
-      }
+      google.script.run
+        .withSuccessHandler(function(questions) {
+          if (!questions || questions.length === 0) {
+            document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">මෙම උපමාතෘකාවට අදාළ ප්‍රශ්න හමු නොවීය.</div>';
+            return;
+          }
+          currentQuestions = questions;
+          qIndex = 0;
+          correctCount = 0;
+          showCurrentQuestion();
+        })
+        .withFailureHandler(function(err) {
+          document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
+        })
+        .getQuestions(activeUnitNo, activeSubtopic);
     }
 
-    function loadFallbackQuestions(unitNo) {
-      const bank = localFallbackBank[unitNo] || localFallbackBank[1];
-      sessionQuestions = bank.map((item, idx) => ({
-        id: "Q_" + idx,
-        unitNo: unitNo,
-        unitName: activeUnitTitle,
-        subtopic: item.sub,
-        question: item.q,
-        options: item.opts,
-        answer: item.ans,
-        explanation: item.exp
-      }));
-      initSession();
-    }
-
-    function initSession() {
-      qIndex = 0;
-      correctCount = 0;
-      showQuestion();
-    }
-
-    function showQuestion() {
-      const q = sessionQuestions[qIndex];
+    function showCurrentQuestion() {
+      const q = currentQuestions[qIndex];
       selectedChoice = null;
       document.getElementById('tag-subtopic').innerText = q.subtopic || activeUnitTitle;
-      document.getElementById('tag-count').innerText = `ප්‍රශ්නය ${qIndex + 1}/${sessionQuestions.length}`;
-      document.getElementById('bar-fill').style.width = `${((qIndex) / sessionQuestions.length) * 100}%`;
+      document.getElementById('tag-count').innerText = `ප්‍රශ්නය ${qIndex + 1}/${currentQuestions.length}`;
+      document.getElementById('bar-fill').style.width = `${((qIndex) / currentQuestions.length) * 100}%`;
       document.getElementById('q-box').innerText = `${qIndex + 1}. ${q.question}`;
 
       const container = document.getElementById('opt-container');
@@ -533,7 +549,7 @@
     }
 
     function onNextClick() {
-      const q = sessionQuestions[qIndex];
+      const q = currentQuestions[qIndex];
       const btn = document.getElementById('btn-submit');
       const buttons = document.querySelectorAll('.option-btn');
 
@@ -550,11 +566,11 @@
         exp.innerHTML = `<strong>විවරණය (Resource Book):</strong><br>${q.explanation}`;
         exp.style.display = 'block';
 
-        btn.innerText = (qIndex + 1 < sessionQuestions.length) ? "මීළඟ ප්‍රශ්නය &rarr;" : "ප්‍රතිඵල විශ්ලේෂණය";
+        btn.innerText = (qIndex + 1 < currentQuestions.length) ? "මීළඟ ප්‍රශ්නය &rarr;" : "ප්‍රතිඵල විශ්ලේෂණය";
       } else {
         qIndex++;
-        if (qIndex < sessionQuestions.length) {
-          showQuestion();
+        if (qIndex < currentQuestions.length) {
+          showCurrentQuestion();
         } else {
           showSummary();
         }
@@ -563,16 +579,20 @@
 
     function showSummary() {
       switchView('view-results');
-      const pct = Math.round((correctCount / sessionQuestions.length) * 100);
+      const pct = Math.round((correctCount / currentQuestions.length) * 100);
       document.getElementById('res-score').innerText = `${pct}%`;
-      document.getElementById('res-summary').innerText = `මෙම වටයේ ප්‍රශ්න ${sessionQuestions.length} න් නිවැරදි පිළිතුරු: ${correctCount}`;
+      document.getElementById('res-summary').innerText = `මෙම උපමාතෘකාවේ ප්‍රශ්න ${currentQuestions.length} න් නිවැරදි පිළිතුරු: ${correctCount}`;
     }
 
-    function replayCurrentUnit() {
-      startQuiz(activeUnitNo, activeUnitTitle);
+    function replayCurrentQuiz() {
+      qIndex = 0;
+      correctCount = 0;
+      switchView('view-quiz');
+      showCurrentQuestion();
     }
 
     function switchView(viewId) {
+      currentScreen = viewId;
       document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-view'));
       document.getElementById(viewId).classList.add('active-view');
     }
