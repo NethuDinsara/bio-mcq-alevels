@@ -259,6 +259,9 @@
   </div>
 
   <script>
+    // ඔබේ ලබා දී ඇති Web App URL එක මෙහි ඇත
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwWVD3ie89ixhxst7dlZunYwjhLWMThR5t3ENLiMPc0p1yk-ehBe_YyPLlNFKNBJos/exec";
+
     let activeUnitNo = 1;
     let activeUnitTitle = "";
     let activeSubtopic = "ALL";
@@ -296,6 +299,7 @@
       switchView('view-subtopics');
     }
 
+    // 1. Sheet එකෙන් උපමාතෘකා ලබා ගැනීම (Fetch API හරහා)
     function openUnitSubtopics(unitNo, unitTitle) {
       activeUnitNo = unitNo;
       activeUnitTitle = unitTitle;
@@ -307,20 +311,20 @@
       switchView('view-subtopics');
       document.getElementById('subtopics-container').innerHTML = '<div class="loader-box">Sheet එකෙන් සැබෑ උපමාතෘකා පූරණය වෙමින් පවතී...</div>';
 
-      google.script.run
-        .withSuccessHandler(res => {
+      fetch(`${WEB_APP_URL}?action=getSubtopics&unitNo=${unitNo}`)
+        .then(response => response.json())
+        .then(res => {
           if (res && res.subtopics && res.subtopics.length > 0) {
             renderSubtopicsList(res);
           } else {
             document.getElementById('subtopics-container').innerHTML = 
-              '<div class="loader-box" style="color: #dc2626;">මෙම ඒකකයට අදාළ දත්ත හමු නොවීය. කරුණාකර Google Sheet හි දත්ත නිවැරදිව පරීක්ෂා කරන්න.</div>';
+              '<div class="loader-box" style="color: #dc2626;">මෙම ඒකකයට අදාළ දත්ත හමු නොවීය. කරුණාකර Google Sheet හි දත්ත පරීක්ෂා කරන්න.</div>';
           }
         })
-        .withFailureHandler(err => {
+        .catch(err => {
           document.getElementById('subtopics-container').innerHTML = 
             '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
-        })
-        .getSubtopicsForUnit(unitNo);
+        });
     }
 
     function renderSubtopicsList(res) {
@@ -356,6 +360,7 @@
       });
     }
 
+    // 2. Sheet එකෙන් අදාළ ප්‍රශ්න ලබා ගැනීම (Fetch API හරහා)
     function startQuizWithFilter(subtopic, displaySubName) {
       activeSubtopic = subtopic;
       document.getElementById('top-title').innerText = displaySubName;
@@ -367,8 +372,9 @@
       document.getElementById('exp-box').style.display = 'none';
       document.getElementById('btn-submit').disabled = true;
 
-      google.script.run
-        .withSuccessHandler(questions => {
+      fetch(`${WEB_APP_URL}?action=getQuestions&unitNo=${activeUnitNo}&subtopic=${encodeURIComponent(activeSubtopic)}`)
+        .then(response => response.json())
+        .then(questions => {
           if (questions && questions.length > 0) {
             currentQuestions = questions;
             qIndex = 0;
@@ -378,10 +384,9 @@
             document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">මෙම උපමාතෘකාවට අදාළ ප්‍රශ්න Google Sheet එකෙන් හමු නොවීය.</div>';
           }
         })
-        .withFailureHandler(err => {
+        .catch(err => {
           document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
-        })
-        .getQuestions(activeUnitNo, activeSubtopic);
+        });
     }
 
     function showCurrentQuestion() {
