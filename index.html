@@ -305,50 +305,20 @@
       document.getElementById('subtopic-unit-title').innerText = unitTitle;
 
       switchView('view-subtopics');
-      document.getElementById('subtopics-container').innerHTML = '<div class="loader-box">උපමාතෘකා පූරණය වෙමින් පවතී...</div>';
-
-      // 1.5s Guard timer to prevent hanging
-      let responded = false;
-      const timer = setTimeout(() => {
-        if (!responded) {
-          responded = true;
-          renderSubtopicsList({
-            unitNo: unitNo,
-            totalCount: 50,
-            subtopics: [
-              { subtopic: "මූලික සිද්ධාන්ත හා හැඳින්වීම", count: 25 },
-              { subtopic: "ප්‍රධාන ව්‍යූහ හා කාර්යභාරය", count: 25 }
-            ]
-          });
-        }
-      }, 1500);
+      document.getElementById('subtopics-container').innerHTML = '<div class="loader-box">Sheet එකෙන් උපමාතෘකා පූරණය වෙමින් පවතී...</div>';
 
       google.script.run
         .withSuccessHandler(res => {
-          if (!responded) {
-            responded = true;
-            clearTimeout(timer);
-            if (res && res.subtopics && res.subtopics.length > 0) {
-              renderSubtopicsList(res);
-            } else {
-              renderSubtopicsList({
-                unitNo: unitNo,
-                totalCount: 50,
-                subtopics: [{ subtopic: "ප්‍රධාන මාතෘකා", count: 50 }]
-              });
-            }
+          if (res && res.subtopics && res.subtopics.length > 0) {
+            renderSubtopicsList(res);
+          } else {
+            document.getElementById('subtopics-container').innerHTML = 
+              '<div class="loader-box" style="color: #dc2626;">මෙම ඒකකයට අදාළ දත්ත හමු නොවීය. කරුණාකර Google Sheet හි දත්ත නිවැරදිව පරීක්ෂා කරන්න.</div>';
           }
         })
-        .withFailureHandler(() => {
-          if (!responded) {
-            responded = true;
-            clearTimeout(timer);
-            renderSubtopicsList({
-              unitNo: unitNo,
-              totalCount: 50,
-              subtopics: [{ subtopic: "සියලු සිද්ධාන්ත", count: 50 }]
-            });
-          }
+        .withFailureHandler(err => {
+          document.getElementById('subtopics-container').innerHTML = 
+            '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
         })
         .getSubtopicsForUnit(unitNo);
     }
@@ -397,50 +367,21 @@
       document.getElementById('exp-box').style.display = 'none';
       document.getElementById('btn-submit').disabled = true;
 
-      let responded = false;
-      const timer = setTimeout(() => {
-        if (!responded) {
-          responded = true;
-          currentQuestions = [
-            { id: "F_1", unitNo: activeUnitNo, unitName: "ඒකකය", subtopic: displaySubName, question: "මානව හෘදයේ ස්වභාවික ගතීකරය (pacemaker) ලෙස ක්‍රියා කරන්නේ කුමන ව්‍යුහයද?", options: ["AV ගැටය", "SA ගැටය", "හිස් ගොනුව", "පර්කින්ජි තන්තු", "කෝෂිකා බිත්තිය"], answer: 2, explanation: "සම්පත් පොතට අනුව SA ගැටය ගතීකරය වේ." },
-            { id: "F_2", unitNo: activeUnitNo, unitName: "ඒකකය", subtopic: displaySubName, question: "ආමාශයික යුෂයේ පෙප්සිනෝජන් ස්‍රාවය කරන්නේ කුමන සෛල මඟින්ද?", options: ["පාර්ශ්වික සෛල", "ශ්ලේෂ්මල සෛල", "ප්‍රධාන සෛල", "කුපර් සෛල", "ලැන්ගර්හාන් සෛල"], answer: 3, explanation: "ප්‍රධාන සෛල මඟින් පෙප්සිනෝජන් ස්‍රාවය කරයි." }
-          ];
-          initQuizSession();
-        }
-      }, 1500);
-
       google.script.run
         .withSuccessHandler(questions => {
-          if (!responded) {
-            responded = true;
-            clearTimeout(timer);
-            if (questions && questions.length > 0) {
-              currentQuestions = questions;
-            } else {
-              currentQuestions = [
-                { id: "F_1", unitNo: activeUnitNo, unitName: "ඒකකය", subtopic: displaySubName, question: "මානව හෘදයේ ස්වභාවික ගතීකරය (pacemaker) ලෙස ක්‍රියා කරන්නේ කුමන ව්‍යුහයද?", options: ["AV ගැටය", "SA ගැටය", "හිස් ගොනුව", "පර්කින්ජි තන්තු", "කෝෂිකා බිත්තිය"], answer: 2, explanation: "සම්පත් පොතට අනුව SA ගැටය ගතීකරය වේ." }
-              ];
-            }
-            initQuizSession();
+          if (questions && questions.length > 0) {
+            currentQuestions = questions;
+            qIndex = 0;
+            correctCount = 0;
+            showCurrentQuestion();
+          } else {
+            document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">මෙම උපමාතෘකාවට අදාළ ප්‍රශ්න හමු නොවීය.</div>';
           }
         })
-        .withFailureHandler(() => {
-          if (!responded) {
-            responded = true;
-            clearTimeout(timer);
-            currentQuestions = [
-              { id: "F_1", unitNo: activeUnitNo, unitName: "ඒකකය", subtopic: displaySubName, question: "මානව හෘදයේ ස්වභාවික ගතීකරය (pacemaker) ලෙස ක්‍රියා කරන්නේ කුමන ව්‍යුහයද?", options: ["AV ගැටය", "SA ගැටය", "හිස් ගොනුව", "පර්කින්ජි තන්තු", "කෝෂිකා බිත්තිය"], answer: 2, explanation: "සම්පත් පොතට අනුව SA ගැටය ගතීකරය වේ." }
-            ];
-            initQuizSession();
-          }
+        .withFailureHandler(err => {
+          document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
         })
         .getQuestions(activeUnitNo, activeSubtopic);
-    }
-
-    function initQuizSession() {
-      qIndex = 0;
-      correctCount = 0;
-      showCurrentQuestion();
     }
 
     function showCurrentQuestion() {
@@ -478,8 +419,8 @@
 
     function onNextClick() {
       const q = currentQuestions[qIndex];
-      const btn = document.getElementById('btn-submit');
-      const buttons = document.querySelectorAll('.option-btn');
+      let btn = document.getElementById('btn-submit');
+      let buttons = document.querySelectorAll('.option-btn');
 
       if (btn.innerText === "පිළිතුර තහවුරු කරන්න") {
         if (selectedChoice === q.answer) {
