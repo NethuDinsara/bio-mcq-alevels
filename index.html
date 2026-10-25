@@ -1,312 +1,479 @@
 <!DOCTYPE html>
 <html lang="si">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A/L Biology Quiz App</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 600px;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin: 20px;
-        }
-        .header {
-            background-color: #0b8a54;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-        .header .home-btn {
-            background: #08693f;
-            border: none;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .content-body {
-            padding: 20px;
-        }
-        .quiz-info {
-            display: flex;
-            justify-content: space-between;
-            color: #555;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            color: #222;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .options-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px 0;
-        }
-        .option-item {
-            background: #fff;
-            border: 2px solid #d1e7dd;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1rem;
-            color: #333;
-        }
-        .option-item:hover {
-            background-color: #f1f8f5;
-            border-color: #0b8a54;
-        }
-        .option-item.selected {
-            background-color: #d1e7dd;
-            border-color: #0b8a54;
-            font-weight: bold;
-        }
-        .explanation-box {
-            background: #f9f9f9;
-            border-left: 4px solid #0b8a54;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            color: #444;
-            display: none;
-        }
-        .analysis-btn-container {
-            text-align: center;
-        }
-        .analysis-btn {
-            background-color: #0b8a54;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .analysis-btn:hover {
-            background-color: #08693f;
-        }
-        .hidden {
-            display: none;
-        }
-        .results-card {
-            text-align: center;
-            padding: 20px;
-        }
-        .results-card h2 {
-            color: #0b8a54;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>BIOLESI.LK | A/L Biology 1700+ MCQ Master</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-light: #10b981;
+      --primary-dark: #065f46;
+      --brand-yellow: #fde047;
+      --brand-border: #000000;
+      --bg: #0f172a;
+      --app-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --correct: #16a34a;
+      --correct-bg: #f0fdf4;
+      --wrong: #dc2626;
+      --wrong-bg: #fef2f2;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans Sinhala', 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .app-card {
+      width: 100%;
+      max-width: 640px;
+      min-height: 100vh;
+      background: var(--app-bg);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    header {
+      background: linear-gradient(135deg, #064e3b, #059669);
+      color: #fff;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 0.95rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 230px; }
+    .nav-btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .page-view { display: none; padding: 20px; flex: 1; }
+    .active-view { display: flex; flex-direction: column; }
+
+    #view-home {
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      color: white;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 24px;
+      min-height: 100vh;
+    }
+    .biolesi-logo {
+      font-family: 'Fredoka One', cursive, sans-serif;
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+      color: var(--brand-yellow);
+      -webkit-text-stroke: 3px var(--brand-border);
+      text-shadow: 4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 0px 6px 15px rgba(0,0,0,0.6);
+      display: inline-block;
+      transform: rotate(-1.5deg);
+      margin-bottom: 20px;
+    }
+    .brand-subtitle { font-size: 1.15rem; color: #94a3b8; margin-bottom: 12px; font-weight: 500; }
+    .badge-highlight {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--primary-light);
+      color: #6ee7b7;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+    .home-start-btn {
+      background: linear-gradient(135deg, #fde047, #facc15);
+      color: #000000;
+      border: 3px solid #000000;
+      padding: 16px 36px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0px #000000, 0 12px 20px rgba(0,0,0,0.4);
+      font-family: inherit;
+      width: 100%;
+      max-width: 320px;
+    }
+    .home-start-btn:active { transform: translateY(4px); box-shadow: 0 2px 0px #000000; }
+
+    .unit-badge-grid { display: grid; gap: 12px; margin-top: 14px; }
+    .unit-item {
+      background: #f1f5f9;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .unit-item:hover, .unit-item:active { border-color: var(--primary-light); background: #ecfdf5; }
+    .unit-item h4 { font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+    .unit-item span.count-tag { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
+    .unit-item span.arrow { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
+
+    .meta-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; }
+    .bar-bg { background: #e2e8f0; height: 6px; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+    .bar-fill { background: var(--primary-light); height: 100%; width: 0%; transition: width 0.3s ease; }
+    .q-text { font-size: 1.05rem; font-weight: 600; line-height: 1.6; margin-bottom: 20px; color: #0f172a; }
+    .option-btn {
+      width: 100%; text-align: left; background: #fff; border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 12px; font-size: 0.95rem; font-family: inherit; cursor: pointer;
+      display: flex; align-items: flex-start; gap: 12px; line-height: 1.4;
+    }
+    .option-btn:hover { border-color: var(--primary-light); }
+    .option-btn.selected { border-color: #3b82f6; background: #eff6ff; }
+    .option-btn.correct { border-color: var(--correct); background: var(--correct-bg); color: #166534; font-weight: 600; }
+    .option-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); color: #991b1b; }
+    .badge { background: #e2e8f0; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; flex-shrink: 0; }
+    .option-btn.correct .badge { background: var(--correct); color: white; }
+    .option-btn.wrong .badge { background: var(--wrong); color: white; }
+    .explanation-card { margin-top: 16px; background: #f8fafc; border-left: 4px solid var(--primary); padding: 14px; border-radius: 6px; font-size: 0.9rem; line-height: 1.5; color: #334155; display: none; }
+    .action-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--primary); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 16px; font-family: inherit; }
+    .action-btn:hover { background: var(--primary-dark); }
+    .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+    .loader-box { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 0.95rem; }
+  </style>
 </head>
 <body>
+  <div class="app-card">
+    <header id="main-header" style="display: none;">
+      <button id="btn-back-nav" class="nav-btn" onclick="handleBackNavigation()">&larr; ආපසු</button>
+      <h1 id="top-title">උසස් පෙළ ජීව විද්‍යාව</h1>
+      <button class="nav-btn" onclick="goToHome()">Home</button>
+    </header>
 
-    <div class="app-container">
-        <!-- Header -->
-        <div class="header">
-            <span id="header-title">ජීවයේ ලක්ෂණ</span>
-            <button class="home-btn" onclick="resetQuiz()">Home</button>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="content-body" id="quiz-screen">
-            <div class="quiz-info">
-                <span id="subtopic-label">උපමානකාව</span>
-                <span id="question-counter">ප්‍රශ්නය 1/3</span>
-            </div>
-            
-            <div class="question-text" id="question-text">
-                ප්‍රශ්නය මෙහි පෙන්වනු ලැබේ...
-            </div>
-
-            <ul class="options-list" id="options-list">
-                <!-- Options will load dynamically -->
-            </ul>
-
-            <div class="explanation-box" id="explanation-box">
-                <strong>විවරණය (Resource Book):</strong> <span id="explanation-text"></span>
-            </div>
-        </div>
-
-        <!-- Results Screen (Initially Hidden) -->
-        <div class="content-body hidden" id="results-screen">
-            <div class="results-card">
-                <h2>ප්‍රතිඵල විශ්ලේෂණය (Performance Analysis)</h2>
-                <p id="score-summary" style="font-size: 1.2rem; margin: 20px 0;"></p>
-                <button class="analysis-btn" onclick="resetQuiz()">다시 시작 (Restart Quiz)</button>
-            </div>
-        </div>
-
-        <!-- Footer Action Button -->
-        <div class="content-body" id="footer-action">
-            <div class="analysis-btn-container">
-                <button class="analysis-btn" id="main-action-btn" onclick="handleNextOrAnalysis()">ඊළඟ (Next)</button>
-            </div>
-        </div>
+    <!-- 1. HOMEPAGE -->
+    <div id="view-home" class="page-view active-view">
+      <div class="brand-logo-container">
+        <h1 class="biolesi-logo">BIOLESI.LK</h1>
+      </div>
+      <p class="brand-subtitle">අ.පො.ස. උසස් පෙළ ජීව විද්‍යාව</p>
+      <div class="badge-highlight">1,700+ සම්පත් පොත් MCQs Question Bank</div>
+      <div>
+        <button class="home-start-btn" onclick="goToUnits()">ඉදිරියට යන්න &rarr;</button>
+      </div>
     </div>
 
-    <script>
-        // Sample Quiz Data (Matches your A/L Biology context)
-        const quizData = [
-            {
-                subtopic: "ජීවයේ ලක්ෂණ",
-                question: "1. සජීවී පද්ධතිවල පවතින මූලික ලක්ෂණයක් වන්නේ කුමක්ද?",
-                options: [
-                    "පරිවෘත්තීය ක්‍රියාව සිදු වීම",
-                    "ස්ථාවරව පැවතීම පමණක් වීම",
-                    "බාහිර සාධක මත පමණක් රඳා පැවතීම",
-                    "අජීවී ස්වභාවය පෙන්වීම",
-                    "කිසිදු බලපෑමකට ලක් නොවීම"
-                ],
-                correct: 0,
-                explanation: "සජීවී පද්ධතිවල රසායනික ප්‍රතික්‍රියා සමුදායක් වන පරිවෘත්තීය ක්‍රියාවලිය මූලික ලක්ෂණයකි."
-            },
-            {
-                subtopic: "ජීවයේ ලක්ෂණ",
-                question: "2. හෝමියෝස්ටැසිස් (Homeostasis) යනු කුමක්ද?",
-                options: [
-                    "ශරීරයේ බර වැඩි වීම",
-                    "බාහිර පරිසරය වෙනස් වන විට අභ්‍යන්තර පරිසරය නියතව පවත්වා ගැනීම",
-                    "ශක්තිය සම්පූර්ණයෙන්ම ක්ෂය වීම",
-                    "සෛල බෙදීම නතර වීම",
-                    "ප්‍රජනනය සිදු නොවීම"
-                ],
-                correct: 1,
-                explanation: "හෝමියෝස්ටැසිස් යනු බාහිර පරිසරයේ වෙනස්වීම් හමුවේ ජීවී අභ්‍යන්තර පරිසරය ප්‍රශස්ත ලෙස නියතව පවත්වා ගැනීමයි."
-            },
-            {
-                subtopic: "ජීවයේ ලක්ෂණ",
-                question: "3. ජීවියෙකුට බාහිර හෝ අභ්‍යන්තර උත්තේජනයකට ප්‍රතිචාර දැක්වීමට ඇති හැකියාව හැඳින්වෙන්නේ කුමක්ද?",
-                options: [
-                    "උත්චේජ්‍යතාව (Irritability)",
-                    "හෝමියෝස්ටැසිස්",
-                    "පරිවෘත්තීය",
-                    "අනුකූලනය",
-                    "විභේදනනය"
-                ],
-                correct: 0,
-                explanation: "උත්චේජ්‍යතාව යනු පරිසරයේ සිදුවන වෙනස්වීම් (උත්තේජන) හඳුනාගෙන ورට ප්‍රතිචාර දැක්වීමේ හැකියාවයි."
-            }
-        ];
+    <!-- 2. UNIT DASHBOARD -->
+    <div id="view-units" class="page-view">
+      <h3 style="font-size: 1.1rem; margin-bottom: 4px;">ඒකකය තෝරන්න (Select Unit)</h3>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">උපමාතෘකා හා ප්‍රශ්න වෙත පිවිසීමට ඒකකය ක්ලික් කරන්න</p>
 
-        let currentQuestion = 0;
-        let selectedOption = null;
-        let score = 0;
-        let isAnswered = false;
+      <div class="unit-badge-grid">
+        <div class="unit-item" onclick="openUnitSubtopics(1, 'ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම')">
+          <div><h4>ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම</h4><span class="count-tag">ප්‍රශ්න 125</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(2, 'ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම')">
+          <div><h4>ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම</h4><span class="count-tag">ප්‍රශ්න 390</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(3, 'ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය')">
+          <div><h4>ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය</h4><span class="count-tag">ප්‍රශ්න 190</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(4, 'ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය')">
+          <div><h4>ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය</h4><span class="count-tag">ප්‍රශ්න 186</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" style="border: 2px solid var(--primary-light); background: #f0fdf4;" onclick="openUnitSubtopics(5, 'ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය')">
+          <div><h4>ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය ⭐</h4><span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න 508 (High Weightage)</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(6, 'ඒකකය 06: ප්‍රවේණිය')">
+          <div><h4>ඒකකය 06: ප්‍රවේණිය</h4><span class="count-tag">ප්‍රශ්න 80</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(7, 'ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය')">
+          <div><h4>ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය</h4><span class="count-tag">ප්‍රශ්න 75</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(8, 'ඒකකය 08: පාරිසරික ජීව විද්‍යාව')">
+          <div><h4>ඒකකය 08: පාරිසරික ජීව විද්‍යාව</h4><span class="count-tag">ප්‍රශ්න 70</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+        <div class="unit-item" onclick="openUnitSubtopics(9, 'ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව')">
+          <div><h4>ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව</h4><span class="count-tag">ප්‍රශ්න 100</span></div>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </div>
+    </div>
 
-        const questionCounterEl = document.getElementById("question-counter");
-        const questionTextEl = document.getElementById("question-text");
-        const optionsListEl = document.getElementById("options-list");
-        const explanationBoxEl = document.getElementById("explanation-box");
-        const explanationTextEl = document.getElementById("explanation-text");
-        const mainActionBtn = document.getElementById("main-action-btn");
-        const quizScreen = document.getElementById("quiz-screen");
-        const resultsScreen = document.getElementById("results-screen");
-        const footerAction = document.getElementById("footer-action");
+    <!-- 3. SUBTOPICS SCREEN -->
+    <div id="view-subtopics" class="page-view">
+      <div style="margin-bottom: 14px;">
+        <h3 id="subtopic-unit-title" style="font-size: 1.05rem; margin-bottom: 4px;">උපමාතෘකා</h3>
+        <p style="font-size: 0.85rem; color: var(--muted);">අභ්‍යාස කිරීමට අවශ්‍ය උපමාතෘකාව හෝ සියලු ප්‍රශ්න තෝරන්න</p>
+      </div>
+      <div id="subtopics-container" class="unit-badge-grid">
+        <div class="loader-box">උපමාතෘකා පූරණය වෙමින් පවතී...</div>
+      </div>
+    </div>
 
-        function loadQuestion() {
-            isAnswered = false;
-            selectedOption = null;
-            explanationBoxEl.style.display = "none";
-            
-            const q = quizData[currentQuestion];
-            questionCounterEl.innerText = `ප්‍රශ්නය ${currentQuestion + 1}/${quizData.length}`;
-            questionTextEl.innerText = q.question;
-            
-            optionsListEl.innerHTML = "";
-            q.options.forEach((opt, index) => {
-                const li = document.createElement("li");
-                li.className = "option-item";
-                li.innerText = `(${index + 1}) ${opt}`;
-                li.onclick = () => selectOption(index, li);
-                optionsListEl.appendChild(li);
-            });
+    <!-- 4. QUIZ SCREEN -->
+    <div id="view-quiz" class="page-view">
+      <div class="meta-bar">
+        <span id="tag-subtopic" style="font-weight: 600; color: var(--primary);">උපමාතෘකාව</span>
+        <span id="tag-count" style="font-weight: 700;">ප්‍රශ්නය 1/..</span>
+      </div>
+      <div class="bar-bg">
+        <div id="bar-fill" class="bar-fill"></div>
+      </div>
+      <div id="q-box" class="q-text"></div>
+      <div id="opt-container"></div>
+      <div id="exp-box" class="explanation-card"></div>
+      <button id="btn-submit" class="action-btn" onclick="onNextClick()" disabled>පිළිතුර තහවුරු කරන්න</button>
+    </div>
 
-            if (currentQuestion === quizData.length - 1) {
-                mainActionBtn.innerText = "ප්‍රතිඵල විශ්ලේෂණය (Performance Analysis)";
-            } else {
-                mainActionBtn.innerText = "ඊළඟ (Next)";
-            }
+    <!-- 5. RESULTS SCREEN -->
+    <div id="view-results" class="page-view" style="text-align: center; padding-top: 40px;">
+      <div id="res-score" style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">0%</div>
+      <h3 style="margin-bottom: 8px;">අභ්‍යාසය සම්පූර්ණයි!</h3>
+      <p id="res-summary" style="color: var(--muted); margin-bottom: 24px; font-size: 0.95rem;"></p>
+      <button class="action-btn" style="margin-bottom: 10px;" onclick="replayCurrentQuiz()">මෙම ප්‍රශ්න නැවත කරන්න</button>
+      <button class="action-btn" style="background: #475569;" onclick="backToSubtopics()">&larr; උපමාතෘකා වෙත යන්න</button>
+    </div>
+  </div>
+
+  <script>
+    // ඔබේ Google Apps Script Web App URL එක මෙහි ඇතුළත් කරන්න
+    const WEB_APP_URL = "YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE";
+
+    let activeUnitNo = 1;
+    let activeUnitTitle = "";
+    let activeSubtopic = "ALL";
+    let currentQuestions = [];
+    let qIndex = 0;
+    let selectedChoice = null;
+    let correctCount = 0;
+    let currentScreen = "view-home";
+
+    function goToHome() {
+      document.getElementById('main-header').style.display = 'none';
+      switchView('view-home');
+    }
+
+    function goToUnits() {
+      document.getElementById('main-header').style.display = 'flex';
+      document.getElementById('top-title').innerText = "උසස් පෙළ ජීව විද්‍යාව";
+      document.getElementById('btn-back-nav').innerHTML = "&larr; මුල් පිටුව";
+      switchView('view-units');
+    }
+
+    function handleBackNavigation() {
+      if (currentScreen === 'view-quiz' || currentScreen === 'view-results') {
+        backToSubtopics();
+      } else if (currentScreen === 'view-subtopics') {
+        goToUnits();
+      } else if (currentScreen === 'view-units') {
+        goToHome();
+      }
+    }
+
+    function backToSubtopics() {
+      document.getElementById('top-title').innerText = activeUnitTitle.split('(')[0].trim();
+      document.getElementById('btn-back-nav').innerHTML = "&larr; ඒකක වෙත";
+      switchView('view-subtopics');
+    }
+
+    function openUnitSubtopics(unitNo, unitTitle) {
+      activeUnitNo = unitNo;
+      activeUnitTitle = unitTitle;
+      document.getElementById('main-header').style.display = 'flex';
+      document.getElementById('top-title').innerText = unitTitle.split('(')[0].trim();
+      document.getElementById('btn-back-nav').innerHTML = "&larr; ඒකක වෙත";
+      document.getElementById('subtopic-unit-title').innerText = unitTitle;
+
+      switchView('view-subtopics');
+      document.getElementById('subtopics-container').innerHTML = '<div class="loader-box">Sheet එකෙන් සැබෑ උපමාතෘකා පූරණය වෙමින් පවතී...</div>';
+
+      fetch(`${WEB_APP_URL}?action=getSubtopics&unitNo=${unitNo}`, {
+        method: 'GET',
+        redirect: 'follow'
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res && res.subtopics && res.subtopics.length > 0) {
+            renderSubtopicsList(res);
+          } else {
+            document.getElementById('subtopics-container').innerHTML = 
+              '<div class="loader-box" style="color: #dc2626;">මෙම ඒකකයට අදාළ දත්ත හමු නොවීය. කරුණාකර Google Sheet හි දත්ත පරීක්ෂා කරන්න.</div>';
+          }
+        })
+        .catch(err => {
+          document.getElementById('subtopics-container').innerHTML = 
+            '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
+        });
+    }
+
+    function renderSubtopicsList(res) {
+      const container = document.getElementById('subtopics-container');
+      container.innerHTML = '';
+
+      const allItem = document.createElement('div');
+      allItem.className = 'unit-item';
+      allItem.style.border = '2px solid var(--primary-light)';
+      allItem.style.background = '#f0fdf4';
+      allItem.innerHTML = `
+        <div>
+          <h4 style="color: #047857;">⭐ මෙම ඒකකයේ සියලුම ප්‍රශ්න (All Questions)</h4>
+          <span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න ${res.totalCount} ක් අඩංගුයි</span>
+        </div>
+        <span class="arrow">&rarr;</span>
+      `;
+      allItem.onclick = () => startQuizWithFilter("ALL", `සියලුම ප්‍රශ්න (${res.totalCount})`);
+      container.appendChild(allItem);
+
+      res.subtopics.forEach(sub => {
+        const item = document.createElement('div');
+        item.className = 'unit-item';
+        item.innerHTML = `
+          <div>
+            <h4>${sub.subtopic}</h4>
+            <span class="count-tag">ප්‍රශ්න ${sub.count}</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        `;
+        item.onclick = () => startQuizWithFilter(sub.subtopic, sub.subtopic);
+        container.appendChild(item);
+      });
+    }
+
+    function startQuizWithFilter(subtopic, displaySubName) {
+      activeSubtopic = subtopic;
+      document.getElementById('top-title').innerText = displaySubName;
+      document.getElementById('btn-back-nav').innerHTML = "&larr; උපමාතෘකා";
+      switchView('view-quiz');
+
+      document.getElementById('q-box').innerHTML = '<div class="loader-box">Google Sheet එකෙන් සැබෑ ප්‍රශ්න පූරණය වෙමින් පවතී...</div>';
+      document.getElementById('opt-container').innerHTML = '';
+      document.getElementById('exp-box').style.display = 'none';
+      document.getElementById('btn-submit').disabled = true;
+
+      fetch(`${WEB_APP_URL}?action=getQuestions&unitNo=${activeUnitNo}&subtopic=${encodeURIComponent(activeSubtopic)}`, {
+        method: 'GET',
+        redirect: 'follow'
+      })
+        .then(response => response.json())
+        .then(questions => {
+          if (questions && questions.length > 0) {
+            currentQuestions = questions;
+            qIndex = 0;
+            correctCount = 0;
+            showCurrentQuestion();
+          } else {
+            document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">මෙම උපමාතෘකාවට අදාළ ප්‍රශ්න Google Sheet එකෙන් හමු නොවීය.</div>';
+          }
+        })
+        .catch(err => {
+          document.getElementById('q-box').innerHTML = '<div class="loader-box" style="color: #dc2626;">දෝෂයකි: ' + err.message + '</div>';
+        });
+    }
+
+    function showCurrentQuestion() {
+      const q = currentQuestions[qIndex];
+      selectedChoice = null;
+      document.getElementById('tag-subtopic').innerText = q.subtopic || activeUnitTitle;
+      document.getElementById('tag-count').innerText = `ප්‍රශ්නය ${qIndex + 1}/${currentQuestions.length}`;
+      document.getElementById('bar-fill').style.width = `${((qIndex) / currentQuestions.length) * 100}%`;
+      document.getElementById('q-box').innerText = `${qIndex + 1}. ${q.question}`;
+
+      const container = document.getElementById('opt-container');
+      container.innerHTML = '';
+      const numbers = ['(1)', '(2)', '(3)', '(4)', '(5)'];
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="badge">${numbers[idx]}</span><span>${opt}</span>`;
+        btn.onclick = () => pickOption(idx + 1, btn);
+        container.appendChild(btn);
+      });
+
+      document.getElementById('exp-box').style.display = 'none';
+      document.getElementById('btn-submit').disabled = true;
+      document.getElementById('btn-submit').innerText = "පිළිතුර තහවුරු කරන්න";
+    }
+
+    function pickOption(choiceNum, element) {
+      if (document.getElementById('exp-box').style.display === 'block') return;
+      selectedChoice = choiceNum;
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      element.classList.add('selected');
+      document.getElementById('btn-submit').disabled = false;
+    }
+
+    function onNextClick() {
+      const q = currentQuestions[qIndex];
+      let btn = document.getElementById('btn-submit');
+      let buttons = document.querySelectorAll('.option-btn');
+
+      if (btn.innerText === "පිළිතුර තහවුරු කරන්න") {
+        if (selectedChoice === q.answer) {
+          correctCount++;
+          buttons[selectedChoice - 1].classList.add('correct');
+        } else {
+          buttons[selectedChoice - 1].classList.add('wrong');
+          buttons[q.answer - 1].classList.add('correct');
         }
 
-        function selectOption(index, element) {
-            if (isAnswered) return;
-            
-            // Remove selection from others
-            document.querySelectorAll(".option-item").forEach(el => el.classList.remove("selected"));
-            element.classList.add("selected");
-            
-            selectedOption = index;
-            isAnswered = true;
+        const exp = document.getElementById('exp-box');
+        exp.innerHTML = `<strong>විවරණය (Resource Book):</strong><br>${q.explanation}`;
+        exp.style.display = 'block';
 
-            const q = quizData[currentQuestion];
-            if (selectedOption === q.correct) {
-                score++;
-            }
-
-            // Show explanation box like in your screenshot
-            explanationTextEl.innerText = q.explanation;
-            explanationBoxEl.style.display = "block";
+        btn.innerText = (qIndex + 1 < currentQuestions.length) ? "මීළඟ ප්‍රශ්නය &rarr;" : "ප්‍රතිඵල විශ්ලේෂණය";
+      } else {
+        qIndex++;
+        if (qIndex < currentQuestions.length) {
+          showCurrentQuestion();
+        } else {
+          showSummary();
         }
+      }
+    }
 
-        function handleNextOrAnalysis() {
-            if (!isAnswered && currentQuestion < quizData.length) {
-                alert("කරුණාකර පිළිතුරක් තෝරන්න!");
-                return;
-            }
+    function showSummary() {
+      switchView('view-results');
+      const pct = Math.round((correctCount / currentQuestions.length) * 100);
+      document.getElementById('res-score').innerText = `${pct}%`;
+      document.getElementById('res-summary').innerText = `මෙම උපමාතෘකාවේ ප්‍රශ්න ${currentQuestions.length} න් නිවැරදි පිළිතුරු: ${correctCount}`;
+    }
 
-            currentQuestion++;
+    function replayCurrentQuiz() {
+      qIndex = 0;
+      correctCount = 0;
+      switchView('view-quiz');
+      showCurrentQuestion();
+    }
 
-            if (currentQuestion < quizData.length) {
-                loadQuestion();
-            } else {
-                showAnalysis();
-            }
-        }
-
-        function showAnalysis() {
-            quizScreen.classList.add("hidden");
-            resultsScreen.classList.remove("hidden");
-            footerAction.classList.add("hidden"); // Hide regular next button
-
-            document.getElementById("score-summary").innerText = 
-                `ඔබ ලබාගත් ලකුණු: ${score} / ${quizData.length} (${Math.round((score/quizData.length)*100)}%)`;
-        }
-
-        function resetQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            quizScreen.classList.remove("hidden");
-            resultsScreen.classList.add("hidden");
-            footerAction.classList.remove("hidden");
-            loadQuestion();
-        }
-
-        // Initialize first question on load
-        loadQuestion();
-    </script>
+    function switchView(viewId) {
+      currentScreen = viewId;
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-view'));
+      document.getElementById(viewId).classList.add('active-view');
+    }
+  </script>
 </body>
 </html>
