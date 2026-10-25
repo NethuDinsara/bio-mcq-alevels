@@ -259,7 +259,8 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwWVD3ie89ixhxst7dlZunYwjhLWMThR5t3ENLiMPc0p1yk-ehBe_YyPLlNFKNBJos/exec";
+    // ඔබේ නව Google Apps Script Web App URL එක මෙහි ඇතුළත් කරන්න
+    const WEB_APP_URL = "YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE";
 
     let activeUnitNo = 1;
     let activeUnitTitle = "";
@@ -446,10 +447,12 @@
         btn.innerText = (qIndex + 1 < currentQuestions.length) ? "මීළඟ ප්‍රශ්නය &rarr;" : "ප්‍රතිඵල විශ්ලේෂණය";
       } else {
         qIndex++;
-        if (qIndex < currentQuestions.length) {
-          showCurrentQuestion();
-        } else {
-          showSummary();
+        if (qIndex < currentQuestions.link || qIndex < currentQuestions.length) {
+          if (qIndex < currentQuestions.length) {
+            showCurrentQuestion();
+          } else {
+            showSummary();
+          }
         }
       }
     }
