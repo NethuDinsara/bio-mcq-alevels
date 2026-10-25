@@ -180,45 +180,10 @@
     <!-- 2. UNIT DASHBOARD -->
     <div id="view-units" class="page-view">
       <h3 style="font-size: 1.1rem; margin-bottom: 4px;">ඒකකය තෝරන්න (Select Unit)</h3>
-      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">උපමාතෘකා හා ප්‍රශ්න වෙත පිවිසීමට ඒකකය ක්ලික් කරන්න</p>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">සම්පත් පොත් දත්ත සමුදායෙන් සැබෑ ප්‍රශ්න ගණන පූරණය වෙමින් පවතී...</p>
 
-      <div class="unit-badge-grid">
-        <div class="unit-item" onclick="openUnitSubtopics(1, 'ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම')">
-          <div><h4>ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම</h4><span class="count-tag">ප්‍රශ්න 125</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(2, 'ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම')">
-          <div><h4>ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම</h4><span class="count-tag">ප්‍රශ්න 390</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(3, 'ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය')">
-          <div><h4>ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය</h4><span class="count-tag">ප්‍රශ්න 190</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(4, 'ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය')">
-          <div><h4>ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය</h4><span class="count-tag">ප්‍රශ්න 186</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" style="border: 2px solid var(--primary-light); background: #f0fdf4;" onclick="openUnitSubtopics(5, 'ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය')">
-          <div><h4>ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය ⭐</h4><span class="count-tag" style="color: #047857; font-weight: 700;">ප්‍රශ්න 508 (High Weightage)</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(6, 'ඒකකය 06: ප්‍රවේණිය')">
-          <div><h4>ඒකකය 06: ප්‍රවේණිය</h4><span class="count-tag">ප්‍රශ්න 80</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(7, 'ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය')">
-          <div><h4>ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය</h4><span class="count-tag">ප්‍රශ්න 75</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(8, 'ඒකකය 08: පාරිසරික ජීව විද්‍යාව')">
-          <div><h4>ඒකකය 08: පාරිසරික ජීව විද්‍යාව</h4><span class="count-tag">ප්‍රශ්න 70</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
-        <div class="unit-item" onclick="openUnitSubtopics(9, 'ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව')">
-          <div><h4>ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව</h4><span class="count-tag">ප්‍රශ්න 100</span></div>
-          <span class="arrow">&rarr;</span>
-        </div>
+      <div class="unit-badge-grid" id="units-container">
+        <!-- Dynamically loaded units with real counts from Sheet -->
       </div>
     </div>
 
@@ -259,8 +224,20 @@
   </div>
 
   <script>
-    // නිවැරදි Google Apps Script Web App URL එක මෙහි සටහන් කර ඇත
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwWVD3ie89ixhxst7dlZunYwjhLWMThR5t3ENLiMPc0p1yk-ehBe_YyPLlNFKNBJos/exec";
+
+    // List of Units to fetch real counts dynamically
+    const unitsList = [
+      { no: 1, title: "ඒකකය 01: ජීව විද්‍යාව හඳුන්වා දීම" },
+      { no: 2, title: "ඒකකය 02: ජීවයේ රසායනික හා සෛලීය පදනම" },
+      { no: 3, title: "ඒකකය 03: පරිණාමය හා ජීවීන්ගේ විවිධත්වය" },
+      { no: 4, title: "ඒකකය 04: ශාක ආකාරය හා ක්‍රියාකාරිත්වය" },
+      { no: 5, title: "ඒකකය 05: සත්ත්ව ආකාරය හා ක්‍රියාකාරිත්වය ⭐", highlight: true },
+      { no: 6, title: "ඒකකය 06: ප්‍රවේණිය" },
+      { no: 7, title: "ඒකකය 07: අණුක ජීව විද්‍යාව හා rDNA තාක්ෂණය" },
+      { no: 8, title: "ඒකකය 08: පාරිසරික ජීව විද්‍යාව" },
+      { no: 9, title: "ඒකකය 09: ක්ෂුද්‍ර ජීව විද්‍යාව" }
+    ];
 
     let activeUnitNo = 1;
     let activeUnitTitle = "";
@@ -281,6 +258,53 @@
       document.getElementById('top-title').innerText = "උසස් පෙළ ජීව විද්‍යාව";
       document.getElementById('btn-back-nav').innerHTML = "&larr; මුල් පිටුව";
       switchView('view-units');
+      loadAllUnitCounts();
+    }
+
+    // Automatically fetch real question counts from Google Sheet for each unit
+    function loadAllUnitCounts() {
+      const container = document.getElementById('units-container');
+      container.innerHTML = '<div class="loader-box">Google Sheet එකෙන් සැබෑ ප්‍රශ්න ගණන් පූරණය වෙමින් පවතී...</div>';
+      container.innerHTML = "";
+
+      unitsList.forEach(u => {
+        const item = document.createElement('div');
+        item.className = 'unit-item';
+        if (u.highlight) {
+          item.style.border = '2px solid var(--primary-light)';
+          item.style.background = '#f0fdf4';
+        }
+        item.id = `unit-card-${u.no}`;
+        item.innerHTML = `
+          <div>
+            <h4>${u.title}</h4>
+            <span class="count-tag" id="count-tag-${u.no}">ගණනය කරමින්...</span>
+          </div>
+          <span class="arrow">&rarr;</span>
+        `;
+        item.onclick = () => openUnitSubtopics(u.no, u.title);
+        container.appendChild(item);
+
+        // Fetch subtopics to calculate total real questions for this unit
+        fetch(`${WEB_APP_URL}?action=getSubtopics&unitNo=${u.no}`, {
+          method: 'GET',
+          redirect: 'follow'
+        })
+        .then(response => response.json())
+        .then(res => {
+          const tag = document.getElementById(`count-tag-${u.no}`);
+          if (res && res.totalCount !== undefined) {
+            tag.innerText = `ප්‍රශ්න ${res.totalCount}`;
+            if (u.highlight) tag.style.color = '#047857';
+          } else {
+            tag.innerText = `ප්‍රශ්න 0`;
+          }
+        })
+        .catch(err => {
+          const tag = document.getElementById(`count-tag-${u.no}`);
+          if (tag) tag.innerText = `ප්‍රශ්න ගණන ලබාගත නොහැකි විය`;
+        });
+      });
     }
 
     function handleBackNavigation() {
